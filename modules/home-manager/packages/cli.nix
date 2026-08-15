@@ -14,6 +14,7 @@
     htop
     bat
     highlight
+    delta
     xclip
     wl-clipboard
     jq
@@ -24,8 +25,5 @@
     lm_sensors
     xdotool
     appimage-run
-
-    # WARN: testing
-    # zellij
   ];
 }

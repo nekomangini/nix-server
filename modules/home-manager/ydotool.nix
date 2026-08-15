@@ -19,7 +19,7 @@
     Service = {
       Type = "simple";
       Restart = "on-failure";
-      ExecStart = "${pkgs.ydotool}/bin/ydotoold --socket-path /tmp/ydotools --udev-keep --autorestart";
+      ExecStart = "${pkgs.ydotool}/bin/ydotoold --socket-path /tmp/ydotools";
     };
 
     Install = {
