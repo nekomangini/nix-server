@@ -14,6 +14,8 @@
 
     environment = {
       DOWNLOAD_DIR = "/downloads";
+      # NOTE: Using yt-dlp nightly builds
+      YTDL_NIGHTLY_UPDATE_TIME = "04:00";
     };
 
     autoStart = true;
