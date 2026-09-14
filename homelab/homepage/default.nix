@@ -119,6 +119,31 @@ in
               };
             };
           }
+
+          {
+            "Cloud" = [
+              {
+                "Nextcloud" = {
+                  href = "http://nextcloud.home";
+                  description = "File sync and share";
+                  icon = "nextcloud.png";
+                  widget = {
+                    type = "nextcloud";
+                    url = "http://nextcloud.home";
+                    username = "{{HOMEPAGE_VAR_NEXTCLOUD_USER}}";
+                    password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASS}}";
+                  };
+                };
+              }
+              {
+                "FileBrowser" = {
+                  href = "http://filebrowser.home";
+                  description = "web-base file manager";
+                  icon = "filebrowser.png";
+                };
+              }
+            ];
+          }
         ];
       }
       {

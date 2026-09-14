@@ -11,5 +11,10 @@
     settings = null;
   };
 
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+  ];
+
   services.redis.servers.immich.logLevel = "warning";
 }

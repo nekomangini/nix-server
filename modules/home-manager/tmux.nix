@@ -1,8 +1,30 @@
-{ ... }:
-
+{ pkgs, ... }:
 {
   programs.tmux = {
     enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      yank
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          # Save and restore tmux sessions
+          set -g @resurrect-capture-pane-contents 'on'
+          # Restore these programs
+          set -g @resurrect-processes 'ssh mosh hx nvim emacs'
+          # Save session every directory
+          set -g @resurrect-strategy-hx 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          # Auto-save session every 10 minutes
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '10'
+        '';
+      }
+    ];
     extraConfig = ''
       # Unbind default prefix key (C-b) and change to (C-\)
       unbind C-b
@@ -24,6 +46,9 @@
       set -ga terminal-overrides ",*256col*:Tc"
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -ga terminal-overrides ",xterm-kitty:Tc"
+
+      # Show continuum status in tmux status bar
+      set -g status-right 'Continuum: #{continuum_status}'
     '';
   };
 }

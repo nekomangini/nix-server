@@ -25,5 +25,6 @@
     lm_sensors
     xdotool
     appimage-run
+    exiftool
   ];
 }

@@ -323,7 +323,7 @@ sub pick-journal-file(Str $type --> IO::Path) {
         exit;
     }
 
-    my $fzf = run <fzf --height=~50% --border --layout=reverse --prompt=Select-File:>, :in, :out;
+    my $fzf = run <fzf --height=~50% --layout=reverse --prompt=Select-File:>, :in, :out;
     $fzf.in.say($_.relative($base)) for @files;
     $fzf.in.close;
     my $choice = $fzf.out.slurp.trim;
@@ -484,7 +484,7 @@ sub create-log {
         'Quit'
     );
 
-    my $fzf = run <fzf --style full --height=~50% --border --layout=reverse --prompt=Select-Template:>, :in, :out;
+    my $fzf = run <fzf --style full --height=~50% --layout=reverse --prompt=Select-Template:>, :in, :out;
     $fzf.in.say($_) for @options;
     $fzf.in.close;
     my $choice = $fzf.out.slurp.trim;

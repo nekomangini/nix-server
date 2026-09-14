@@ -5,8 +5,14 @@ sub MAIN(Str $word) {
     # rg --vimgrep <word> | fzf --preview 'cat {}' --height 70% | xargs hx
     # rg --vimgrep <word> | fzf --height 70% | xargs hx
 
+    # NOTE: Add a preview 
+    # --preview 'bat --color=always {}' --preview-window '~3'
     my $proc1 = run 'rg', '--vimgrep', $word, :out;
-    my $proc2 = run 'fzf', '--height', '~70%', '--style', 'full', '--border', :in($proc1.out), :out, :err;
+    my $proc2 = run 'fzf',
+        '--delimiter', ':',
+        '--preview', 'bat --color=always --highlight-line {2} {1}',
+        '--preview-window', 'up,60%,border-bottom',
+        :in($proc1.out), :out, :err;
     $proc1.out.slurp;
     my $selected-line = $proc2.out.slurp(:close).trim;
     my $exitcode = $proc2.exitcode;

@@ -12,4 +12,8 @@ in
     nekomangini
     local
   ];
+  "nextcloud-admin.age".publicKeys = [
+    nekomangini
+    local
+  ];
 }

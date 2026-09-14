@@ -2,7 +2,7 @@
 use v6.d;
 
 constant %PATHS = (
-    DOTFILES_PATH => '/home/nekomangini/neko-dotfiles',
+    DOTFILES_PATH => '/home/nekomangini/nix-server',
     NOTES_PATH    => '/mnt/D/homelab/sync/notes',
     FLUTTER_PATH  => '/mnt/D/Programming/Projects/android-projects',
     VUE_PATH      => '/mnt/D/Programming/Projects/project-vue',
@@ -17,7 +17,6 @@ sub MAIN(Str $choice?) {
                        '--prompt=Tmux session: ',
                        '--height=~50%',
                        '--layout=reverse',
-                       '--border',
                        :in, :out;
 
         # Display all sessions + quit

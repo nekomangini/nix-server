@@ -5,11 +5,29 @@ let
   kitty = pkgs.kitty;
   tmux = pkgs.tmux;
   foot = pkgs.foot;
+  zellij = pkgs.zellij;
 
   # emacs = pkgs.emacs-gtk;
   emacs = pkgs.emacs-pgtk.pkgs.withPackages (epkgs: [
     epkgs.treesit-grammars.with-all-grammars
   ]);
+
+  kittySession = pkgs.writeText "kitty-session.conf" ''
+    new_tab main
+    launch ${tmux}/bin/tmux new-session -A -s main
+
+    new_tab ssh
+    launch ${tmux}/bin/tmux new-session -A -s ssh
+
+    new_tab zellij-logs
+    launch ${zellij}/bin/zellij attach --create logs
+
+    new_tab zellij-work
+    launch ${zellij}/bin/zellij attach --create work
+
+    new_tab tmux-dotfiles
+    launch ${tmux}/bin/tmux new-session -A -s dotfiles
+  '';
 in
 
 # TODO
@@ -25,6 +43,12 @@ in
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""
     '')
 
+    # ===== Wayland =====
+    # TEST
+    # (writeShellScriptBin "hed" ''
+    #   exec ${emacs-pgtk}/bin/emacsclient -nw
+    # '')
+
     # NOTE: Used in wayland session
     (writeShellScriptBin "doom-foot-terminal" ''
       if ! ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a "" 2>/dev/null; then
@@ -34,11 +58,11 @@ in
       fi
     '')
 
-    # ===== Wayland =====
-    # TEST
-    # (writeShellScriptBin "hed" ''
-    #   exec ${emacs-pgtk}/bin/emacsclient -nw
-    # '')
+    # ===== Terminal =====
+    # kitty
+    (writeShellScriptBin "dev-workspace" ''
+      exec ${kitty}/bin/kitty --session ${kittySession}
+    '')
 
     # ===== Scripts=====
     # Joplin

@@ -13,7 +13,7 @@
       "9" = [
         { class = "^Vivaldi-stable$"; }
         { class = "^helium$"; }
-        { class = "^ticktick$"; }
+        # { class = "^ticktick$"; }
         { class = "^io.github.alainm23.planify$"; }
         { class = "^dolphin$"; }
         { class = "^krita$"; }

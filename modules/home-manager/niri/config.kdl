@@ -279,12 +279,10 @@ spawn-at-startup "waybar"
 spawn-at-startup "awww-daemon"
 
 // triple monitor
-// spawn-sh-at-startup "sleep 1 && swww img --outputs DP-1 /home/nekomangini/neko-dotfiles/wallpaper/cars_034.png && swww img --outputs DVI-D-1 /home/nekomangini/neko-dotfiles/wallpaper/space_009.jpg && swww img --outputs HDMI-A-1 /home/nekomangini/neko-dotfiles/wallpaper/cars_036.jpg"
+// spawn-sh-at-startup "sleep 1 && swww img --outputs DP-1 /home/nekomangini/nix-server/wallpaper/cars_034.png && swww img --outputs DVI-D-1 /home/nekomangini/nix-server/wallpaper/space_009.jpg && swww img --outputs HDMI-A-1 /home/nekomangini/nix-server/wallpaper/cars_036.jpg"
 
 // dual monitor
-spawn-sh-at-startup "sleep 1 && awww img --outputs HDMI-A-1 /home/nekomangini/neko-dotfiles/wallpaper/cats_008.jpg && awww img --outputs DVI-D-1 /home/nekomangini/neko-dotfiles/wallpaper/cars_034.png"
-
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+spawn-sh-at-startup "sleep 1 && awww img --outputs HDMI-A-1 /home/nekomangini/nix-server/wallpaper/cats_008.jpg && awww img --outputs DVI-D-1 /home/nekomangini/nix-server/wallpaper/cars_034.png" // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
 hotkey-overlay {
@@ -430,7 +428,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "dev-workspace"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     // NOTE: Removed, keybind use for mouse emulation, use Super+X(niri-powermenu script) instead
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
