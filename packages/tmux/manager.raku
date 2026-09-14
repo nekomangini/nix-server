@@ -15,7 +15,6 @@ sub MAIN {
         my $fzf = run <
             fzf
             --height=~50%
-            --border
             --layout=reverse
             --prompt=Tmux-Manager:
         >, :in, :out;
@@ -83,7 +82,7 @@ sub list-sessions {
         return;
     }
 
-    my $fzf = run <fzf --height=~50% --border --layout=reverse --prompt=Sessions:>, :in, :out;
+    my $fzf = run <fzf --height=~50% --layout=reverse --prompt=Sessions:>, :in, :out;
     $fzf.in.print($output);
     $fzf.in.close;
     my $selected = $fzf.out.slurp.trim;
@@ -95,7 +94,7 @@ sub list-sessions {
 
 sub delete-session {
     my $tmux = run 'tmux', 'ls', :out;
-    my $fzf = run <fzf --height=~50% --border --layout=reverse --prompt=Kill-Session:>, :in, :out;
+    my $fzf = run <fzf --height=~50% --layout=reverse --prompt=Kill-Session:>, :in, :out;
     $fzf.in.print($tmux.out.slurp);
     $fzf.in.close;
     my $selected = $fzf.out.slurp.trim;
@@ -106,7 +105,7 @@ sub delete-session {
 
 sub attach-session {
     my $tmux = run 'tmux', 'ls', :out;
-    my $fzf = run <fzf --height=~50% --border --layout=reverse --prompt=Attach-Session:>, :in, :out;
+    my $fzf = run <fzf --height=~50% --layout=reverse --prompt=Attach-Session:>, :in, :out;
     $fzf.in.print($tmux.out.slurp);
     $fzf.in.close;
     my $selected = $fzf.out.slurp.trim;

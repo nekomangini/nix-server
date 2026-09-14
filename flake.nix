@@ -28,7 +28,7 @@
       # homeConfiguration.neko-desktop = home-manager.lib.homeManagerConfiguration { };
       nixosConfigurations = {
         # desktop
-        neko-desktop = nixpkgs.lib.nixosSystem {
+        sylphiette = nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/desktop/configuration.nix
             agenix.nixosModules.default

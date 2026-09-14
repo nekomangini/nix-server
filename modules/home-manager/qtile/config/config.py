@@ -281,6 +281,7 @@ layouts = [
 ]
 
 # ── GROUPS  ──────────────────
+# FIX: Monitor arrangement
 groups_names = [
     # ── Monitor 0 (DP-1 / 32"): 1 ──────────────────
     (
@@ -290,13 +291,11 @@ groups_names = [
             "layout": "max",
             "screen_affinity": 2,  # DP-1 is screen 2
             "matches": [
-                Match(wm_class="brave-browser"),
-                Match(wm_class="vivaldi-stable"),
+                Match(wm_class="kitty"),
                 Match(wm_class="helium"),
                 Match(wm_class="gwenview"),
                 Match(wm_class="Zathura"),
                 Match(wm_class="Godot"),
-                Match(wm_class="Blender"),
             ],
         },
     ),
@@ -310,13 +309,15 @@ groups_names = [
             "matches": [
                 Match(wm_class="Emacs"),
                 Match(wm_class="dolphin"),
-                Match(wm_class="ticktick"),
                 Match(wm_class="io.github.alainm23.planify"),
                 Match(wm_class="Joplin"),
                 Match(wm_class="obsidian"),
                 Match(wm_class="krita"),
                 Match(wm_class="kdeconnect-app"),
                 Match(wm_class="PixiEditor.Desktop"),
+                Match(wm_class="vivaldi-stable"),
+                Match(wm_class="brave-browser"),
+                Match(wm_class="Blender"),
             ],
         },
     ),
@@ -328,7 +329,6 @@ groups_names = [
             "layout": "max",
             "screen_affinity": 1,  # HDMI-0 is screen 1
             "matches": [
-                Match(wm_class="kitty"),
                 Match(wm_class="Logseq"),
                 Match(wm_class="dev.zed.Zed"),
                 Match(wm_class="jetbrains-studio"),

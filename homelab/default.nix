@@ -4,6 +4,7 @@
   imports = [
     ./adguard
     ./caddy
+    ./filebrowser
     ./forgejo
     ./homepage
     ./immich
@@ -13,6 +14,7 @@
     ./linkding
     ./metube
     ./navidrome
+    ./nextcloud
     ./netdata
     ./radicale
     ./syncthing

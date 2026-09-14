@@ -14,6 +14,7 @@
       service = {
         DISABLE_REGISTRATION = true;
       };
+      # CI/CD
       actions = {
         ENABLED = true;
         DEFAULT_ACTIONS_URL = "github";

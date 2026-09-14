@@ -43,7 +43,6 @@ sub choose-script {
         end',
         '--height=~50%',
         '--layout=reverse',
-        '--border',
         :in,
         :out;
 

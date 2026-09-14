@@ -13,6 +13,10 @@
         group = "netdata";
         mode = "0640";
       };
+      "nextcloud-admin" = {
+        file = ../../../secrets/nextcloud-admin.age;
+        owner = "nekomangini";
+      };
     };
   };
 }

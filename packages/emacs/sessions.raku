@@ -4,7 +4,7 @@ use v6.d;
 constant %PATHS = (
     notes    => "/mnt/D/homelab/sync/notes",
     raku     => "/mnt/D/Programming/scripts",
-    dotfiles => "/home/nekomangini/neko-dotfiles",
+    dotfiles => "/home/nekomangini/nix-server",
     blog     => "/mnt/D/homelab/sync/notes/01-para/02-areas/media/blogs"
 );
 
@@ -36,7 +36,7 @@ sub MAIN(Str $session?) {
                     echo "Dotfiles workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: ~/neko-dotfiles
+                Directory: ~/nix-server
                 Buffer: Dired"
 
                 case blog
@@ -51,7 +51,6 @@ sub MAIN(Str $session?) {
             end',
             '--height=~50%',
             '--layout=reverse',
-            '--border',
             :in,
             :out;
 

@@ -8,10 +8,12 @@ let
       rakudo
       fzf
       helix
+      ripgrep
+      bat
     ];
 
     text = ''
-      exec raku ${./helix-findword.raku} "@"
+      exec raku ${./helix-findword.raku} "$@"
     '';
   };
 
@@ -22,6 +24,7 @@ let
       rakudo
       fzf
       helix
+      bat
     ];
 
     text = ''

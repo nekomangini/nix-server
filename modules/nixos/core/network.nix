@@ -11,7 +11,7 @@
   # networking.networkmanager.enable = true;
 
   networking = {
-    hostName = "neko-desktop";
+    hostName = "sylphiette";
     useDHCP = false;
 
     # Disable NetworkManager since because I'm setting the static IP manually
@@ -31,6 +31,7 @@
     ];
   };
 
+  # TEST:
   # mDNS so I can use neko-desktop.local instead of IP
   services.avahi = {
     enable = true;

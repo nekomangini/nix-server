@@ -5,10 +5,9 @@ sub MAIN {
     my $selected-file =
         run(
             'fzf',
-            '--style', 'full',
-            '--preview', 'bat {}',
-            '--border',
-            '--height', '~50%',
+            '--delimiter', ':',
+            '--preview', 'bat --color=always {}',
+            '--preview-window', 'up,60%,border-bottom',
             :out
         ).out.slurp(:close).trim;
 

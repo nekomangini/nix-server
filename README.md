@@ -1,4 +1,4 @@
-# neko-dotfiles 🐈‍⬛
+# nix-server
 
 [![NixOS](https://img.shields.io/badge/NixOS-26.05-5277C3?style=flat-square&logo=nixos&logoColor=white)](https://nixos.org)
 [![Home Manager](https://img.shields.io/badge/Home%20Manager-flake-blue?style=flat-square)](https://github.com/nix-community/home-manager)
@@ -6,20 +6,18 @@
 
 My personal NixOS configuration — desktop, laptop, and a self-hosted home lab, all managed as a single flake with Home Manager as a NixOS module and secrets encrypted with agenix.
 
-> Currently migrating the primary remote from GitHub to a self-hosted [Forgejo](https://forgejo.org) instance in the home lab.
-
 ## Hosts
 
-| Hostname       | Role       | Notes                                                                                                                                                                                 |
-| -------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `neko-desktop` | 🖥️ Desktop | i3-7100, 16GB RAM, GTX 1050 Ti · static IP `192.168.1.200` · runs the home lab stack                                                                                                  |
-| `neko-laptop`  | 💻 Laptop  | **Not active** — only 2GB RAM, not enough headroom to run NixOS. Currently running [Void Linux](https://voidlinux.org) instead; config kept in-repo for whenever the hardware changes |
+| Hostname      | Role       | Notes                                                                                                                                                                                 |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sylphiette`  | 🖥️ Desktop | i3-7100, 16GB RAM, GTX 1050 Ti · static IP `192.168.1.200` · runs the home lab stack                                                                                                  |
+| `neko-laptop` | 💻 Laptop  | **Not active** — only 2GB RAM, not enough headroom to run NixOS. Currently running [Void Linux](https://voidlinux.org) instead; config kept in-repo for whenever the hardware changes |
 
 ## Structure
 
 ```
 .
-├── flake.nix                            # entrypoint: nixosConfigurations for neko-desktop / neko-laptop
+├── flake.nix                            # entrypoint: nixosConfigurations for sylphiette / neko-laptop
 ├── hosts/
 │   ├── desktop/                         # configuration.nix, hardware-configuration.nix, users
 │   └── laptop/
@@ -52,9 +50,9 @@ My personal NixOS configuration — desktop, laptop, and a self-hosted home lab,
 
 Multi-compositor setup, switched per-session depending on what I'm feeling:
 
-- **i3** — single monitor
-- **Niri** — dual monitor
-- **Qtile** — triple monitor
+- **i3** — single monitor (wip)
+- **Niri** — dual monitor (main)
+- **Qtile** — triple monitor (wip)
 - **Hyprland** — currently broken; planning to migrate from Hyprlang to Lua config
 
 Shared across all of them: Waybar/panel, Fuzzel/Rofi launchers, Dunst notifications, Kitty (with a custom theme), Fish shell, Helix as the primary editor with a Doom Emacs daemon on standby, and tmux session management driven by [Raku](https://raku.org) scripts.
@@ -71,10 +69,14 @@ Notable fixes documented in-repo:
 
 Everything runs on the desktop host, fronted by **Caddy** as a reverse proxy on `*.home` domains, deployed as NixOS modules (Docker-only apps run via `virtualisation.oci-containers` on Podman), with all secrets managed through **agenix**.
 
+Backups are automated with systemd timers — Nextcloud has daily backups with 7-day retention.
+
 | Service                                                           | Purpose                                              |
 | ----------------------------------------------------------------- | ---------------------------------------------------- |
 | [Jellyfin](https://jellyfin.org)                                  | Media server (hardware transcoding via NVENC)        |
-| [Immich](https://immich.app)                                      | Photo/video backup                                   |
+| [Immich](https://immich.app)                                      | Photo/video backup (GPU-accelerated ML)              |
+| [Nextcloud](https://nextcloud.com)                                | File sync and share (self-hosted)                    |
+| [FileBrowser](https://filebrowser.org)                            | Web-based file manager                               |
 | [Navidrome](https://www.navidrome.org)                            | Music streaming                                      |
 | [Kavita](https://www.kavitareader.com)                            | Manga/book/comic library                             |
 | [Forgejo](https://forgejo.org)                                    | Git hosting — migration target from GitHub           |
@@ -106,7 +108,7 @@ Raku-based CLI tools packaged as Nix derivations and wired into the shell:
 
 ```bash
 # rebuild the desktop
-sudo nixos-rebuild switch --flake .#neko-desktop
+sudo nixos-rebuild switch --flake .#sylphiette
 
 # rebuild the laptop
 sudo nixos-rebuild switch --flake .#neko-laptop
@@ -117,10 +119,9 @@ Secrets are managed with agenix — see `secrets/secrets.nix` for the recipient 
 ## TODO
 
 - [ ] Migrate Hyprland configuration from Hyprlang to Lua
-- [ ] Enable GPU acceleration for machine learning in Immich
+- [x] Enable GPU acceleration for machine learning in Immich
 - [x] Clean up and reorganize packages
-- [ ] Migrate Immich from a native service to Podman via oci-containers, consistent with Linkding
-- [ ] Migrate remaining GitHub repositories to Forgejo
+- [x] Migrate remaining GitHub repositories to Forgejo
 - [ ] Deploy Vaultwarden
 - [ ] Cleanup Raku scripts
 
