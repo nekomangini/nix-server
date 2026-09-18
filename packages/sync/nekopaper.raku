@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use v6.d;
 
-constant $REPO_PATH = '/mnt/D/Programming/Projects/project-vue/nekopaper';
+constant $REPO_PATH = '/mnt/D/dev/01-projects/nekopaper';
 constant $DATE_TODAY = DateTime.now(formatter => { sprintf "%02d-%02d-%d", .month, .day, .year });
 constant $COMMIT_MESSAGE = "update wallpaper $DATE_TODAY";
 

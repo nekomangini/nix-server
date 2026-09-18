@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use v6.d;
 
-constant $REPO_PATH = '/mnt/D/homelab/sync/notes';
+constant $REPO_PATH = '/mnt/D/notes';
 constant $DATE_TODAY = DateTime.now(formatter => {sprintf "%d-%d-%d", .month, .day, .year});
 constant $COMMIT_MESSAGE = "update notes $DATE_TODAY";
 

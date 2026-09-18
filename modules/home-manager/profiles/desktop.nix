@@ -38,15 +38,10 @@
   # ndir path
   myModules.ndir.directories = [
     "/home/nekomangini/nix-server"
-    "/mnt/D/Programming/android-projects"
-    "/mnt/D/Programming/Projects"
-    "/mnt/D/Programming/dotfiles"
-    "/mnt/D/Programming/blender-python"
-    "/mnt/D/Programming/scripts"
-    "/mnt/D/Programming/programming-exercises"
-    "/mnt/D/homelab/sync/notes"
-    "/mnt/D/homelab/forgejo/"
-    "/mnt/D/game-development/save-files"
+    "/mnt/D/dev/01-projects"
+    "/mnt/D/dev/02-areas/scripts"
+    "/mnt/D/notes"
+    "/mnt/D/game-development"
     "${config.home.homeDirectory}/.config/nekovim"
     "${config.home.homeDirectory}/.config/astronvim-v5"
   ];
