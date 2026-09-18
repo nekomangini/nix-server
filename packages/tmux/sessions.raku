@@ -3,10 +3,8 @@ use v6.d;
 
 constant %PATHS = (
     DOTFILES_PATH => '/home/nekomangini/nix-server',
-    NOTES_PATH    => '/mnt/D/homelab/sync/notes',
-    FLUTTER_PATH  => '/mnt/D/Programming/Projects/android-projects',
-    VUE_PATH      => '/mnt/D/Programming/Projects/project-vue',
-    RUBY_PATH     => '/mnt/D/Programming/Projects/project-rubyonrails',
+    NOTES_PATH    => '/mnt/D/notes',
+    PROJECT_PATH  => '/mnt/D/dev/01-projects',
 );
 
 sub MAIN(Str $choice?) {
@@ -49,11 +47,9 @@ sub MAIN(Str $choice?) {
 
 sub create-session(Str $name) {
     my $path = do given $name {
-        when 'flutter'  { %PATHS<FLUTTER_PATH>  }
-        when 'vue'      { %PATHS<VUE_PATH>      }
+        when 'projects' { %PATHS<PROJECT_PATH>  }
         when 'notes'    { %PATHS<NOTES_PATH>    }
         when 'dotfiles' { %PATHS<DOTFILES_PATH> }
-        when 'ruby'     { %PATHS<RUBY_PATH>     }
         when 'main'     { $*HOME.Str            }
         default         { $*HOME.Str            }
     } // $*HOME.Str;
@@ -68,15 +64,13 @@ sub create-session(Str $name) {
     sleep 0.1;
 
     given $name {
-        when 'vue' {
-            run 'tmux', 'rename-window', '-t', "{$name}:0", 'explorer';
-            run 'tmux', 'send-keys', '-t', "{$name}:0", 'y', 'C-m';
-            run 'kitten', '@', 'set-tab-title', 'tmux-vue';
-        }
-        when 'flutter' {
-            run 'tmux', 'rename-window', '-t', "{$name}:0", 'explorer';
-            run 'tmux', 'send-keys', '-t', $name, 'y', 'C-m';
-            run 'kitten', '@', 'set-tab-title', 'tmux-flutter';
+        when 'projects' {
+            run 'tmux', 'rename-window', '-t', "{$name}:0", 'editor';
+            run 'tmux', 'send-keys', '-t', "{$name}:0", 'hx', 'C-m';
+            run 'tmux', 'new-window', '-t', $name, '-n', 'server', '-c', $path;
+            run 'tmux', 'new-window', '-t', $name, '-n', 'console', '-c', $path;
+            run 'tmux', 'select-window', '-t', "{$name}:server";
+            run 'kitten', '@', 'set-tab-title', 'tmux-projects';
         }
         when 'dotfiles' {
             run 'tmux', 'rename-window', '-t', "{$name}:0", 'editor';
@@ -89,14 +83,6 @@ sub create-session(Str $name) {
             run 'tmux', 'rename-window', '-t', "{$name}:0", 'editor';
             run 'tmux', 'send-keys', '-t', "{$name}:0", 'emacsclient -nw -a "" "' ~ $path ~ '"', 'C-m';
             run 'kitten', '@', 'set-tab-title', 'tmux-notes';
-        }
-        when 'ruby' {
-            run 'tmux', 'rename-window', '-t', "{$name}:0", 'editor';
-            run 'tmux', 'send-keys', '-t', "{$name}:0", 'hx', 'C-m';
-            run 'tmux', 'new-window', '-t', $name, '-n', 'server', '-c', $path;
-            run 'tmux', 'new-window', '-t', $name, '-n', 'console', '-c', $path;
-            run 'tmux', 'select-window', '-t', "{$name}:server";
-            run 'kitten', '@', 'set-tab-title', 'tmux-ruby';
         }
         default {
             run 'tmux', 'send-keys', '-t', $name, 'y', 'C-m';

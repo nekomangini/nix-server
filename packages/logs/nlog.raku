@@ -5,8 +5,8 @@ use v6.d;
 # DIRECTORY
 # ──────────────────────────────────────────────
 
-my $JOURNAL_DIR_PATH = "/mnt/D/homelab/sync/notes/02-journal";
-my $BLOG_DIR_PATH    = "/mnt/D/homelab/sync/notes/01-para/02-areas/media/blogs";
+my $JOURNAL_DIR_PATH = "/mnt/D/notes/02-journal";
+my $BLOG_DIR_PATH    = "/mnt/D/notes/01-para/02-areas/media/blogs";
 
 # ──────────────────────────────────────────────
 # CONSTANTS

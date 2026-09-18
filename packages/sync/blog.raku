@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use v6.d;
 
-constant $REPO_PATH = '/mnt/D/Programming/Projects/project-golang/nekomangini.github.io';
+constant $REPO_PATH = '/mnt/D/dev/02-areas/nekomangini.github.io';
 constant $DATE_TODAY = DateTime.now(formatter => {sprintf "%d-%d-%d", .month, .day, .year});
 constant $COMMIT_MESSAGE = "update blog $DATE_TODAY";
 

@@ -2,10 +2,10 @@
 use v6.d;
 
 constant %PATHS = (
-    notes    => "/mnt/D/homelab/sync/notes",
-    raku     => "/mnt/D/Programming/scripts",
+    notes    => "/mnt/D/notes",
+    raku     => "/mnt/D/dev/02-areas/scripts",
     dotfiles => "/home/nekomangini/nix-server",
-    blog     => "/mnt/D/homelab/sync/notes/01-para/02-areas/media/blogs"
+    blog     => "/mnt/D/notes/01-para/02-areas/media/blogs"
 );
 
 sub MAIN(Str $session?) {

@@ -12,7 +12,7 @@ layout {
         }
     }
 
-    tab name="vue" cwd="/mnt/D/Programming/Projects/project-vue" {
+    tab name="projects" cwd="/mnt/D/dev/01-projects" {
         pane name="explorer" {
             pane command="yazi"
         }
@@ -22,38 +22,16 @@ layout {
             pane name="terminal"
         }
     }
-
-    tab name="flutter" cwd="/mnt/D/Programming/Projects/android-projects" {
-        pane name="explorer" {
-            pane command="yazi"
-        }
-        pane name="editor" focus=true
-        pane split_direction="vertical" {
-            pane name="git"
-            pane name="terminal"
-        }
-    }
-
-    tab name="ruby" cwd="/mnt/D/Programming/Projects/project-rubyonrails" {
-        pane name="explorer" {
-            pane command="yazi"
-        }
-        pane name="editor" focus=true
-        pane split_direction="vertical" {
-            pane name="git"
-            pane name="terminal"
-        }
-    }
-
+    
     tab name="scripts" {
         pane name="emacs" command="sh" {
-            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/mnt/D/Programming/scripts\")'"
+            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/mnt/D/dev/02-areas/scripts\")'"
         }
     }
 
     tab name="notes" {
         pane name="emacs" command="sh" {
-            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/mnt/D/homelab/sync/notes\")'"
+            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/mnt/D/notes\")'"
         }
     }
 }

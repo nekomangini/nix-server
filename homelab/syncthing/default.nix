@@ -5,7 +5,7 @@
   services.syncthing = {
     enable = true;
     user = "nekomangini";
-    dataDir = "/mnt/D/homelab/sync/notes";
+    dataDir = "/mnt/D/homelab/sync";
     configDir = "/home/nekomangini/.config/syncthing";
     openDefaultPorts = true;
 
@@ -14,7 +14,7 @@
     settings = {
       folders = {
         "notes" = {
-          path = "/mnt/D/homelab/sync/notes";
+          path = "/mnt/D/notes";
           devices = [
             "SM-A057F"
             "vivo-1920"
