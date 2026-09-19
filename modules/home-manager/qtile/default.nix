@@ -1,9 +1,13 @@
-{ ... }:
+{ config, ... }:
+
+let
+  dotfiles = "${config.home.homeDirectory}/nix-server";
+  symlink = config.lib.file.mkOutOfStoreSymlink;
+in
 
 {
-  home.file.".config/qtile" = {
-    source = ./config;
-    recursive = true;
+  xdg.configFile."qtile" = {
+    source = symlink "${dotfiles}/modules/home-manager/qtile/config";
   };
 
   imports = [
@@ -11,5 +15,4 @@
     ../picom.nix
     ./qtile-autostart.nix
   ];
-
 }
