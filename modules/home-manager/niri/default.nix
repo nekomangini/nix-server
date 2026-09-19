@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+
+let
+  dotfiles = "${config.home.homeDirectory}/nix-server";
+  symlink = config.lib.file.mkOutOfStoreSymlink;
+in
 
 {
-  # Import niri configuration from KDL file
   xdg.configFile."niri/config.kdl" = {
-    source = ./config.kdl;
+    source = symlink "${dotfiles}/modules/home-manager/niri/config.kdl";
   };
 
   # Only add niri-specific packages that aren't already configured elsewhere
