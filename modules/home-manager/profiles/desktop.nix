@@ -26,6 +26,7 @@
     ../hyprland
     ../niri
     ../hyprpaper.nix
+    ../kanshi
     ../waybar
     ../foot
     ../zellij
