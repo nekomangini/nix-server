@@ -51,7 +51,7 @@ My personal NixOS configuration — desktop, laptop, and a self-hosted home lab,
 Multi-compositor setup, switched per-session depending on what I'm feeling:
 
 - **i3** — single monitor (wip)
-- **Niri** — dual monitor (main)
+- **Niri** — main compositor (dual/triple monitor); uses Kanshi for dynamic output management instead of inline `output` configurations in `config.kdl`
 - **Qtile** — triple monitor (wip)
 - **Hyprland** — currently broken; planning to migrate from Hyprlang to Lua config
 
