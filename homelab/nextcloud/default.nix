@@ -46,9 +46,12 @@
   services.nginx.virtualHosts."nextcloud.home" = {
     listen = [
       {
-        addr = "127.0.0.1";
+        # addr = "127.0.0.1";
+        addr = "0.0.0.0";
         port = 9600;
       }
     ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 9600 ];
 }
