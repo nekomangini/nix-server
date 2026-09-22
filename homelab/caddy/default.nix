@@ -52,11 +52,9 @@
       "http://nextcloud.home" = {
         extraConfig = "reverse_proxy localhost:9600";
       };
-
       "http://filebrowser.home" = {
         extraConfig = "reverse_proxy localhost:8085";
       };
-
     };
   };
 
