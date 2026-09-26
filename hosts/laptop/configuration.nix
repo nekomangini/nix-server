@@ -9,38 +9,58 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/polkit-rules.nix
+    # ./modules/polkit-rules.nix
     ./modules/users.nix
     ../../modules/nixos/users
+
+    # === CORE ===
     ../../modules/nixos/core/boot.nix
     ../../modules/nixos/core/locale.nix
     ../../modules/nixos/core/fonts.nix
     ../../modules/nixos/core/network.nix
     ../../modules/nixos/core/nixsetting.nix
 
+    # === HARDWARE ===
     ../../modules/nixos/hardware/audio.nix
 
-    ../../modules/nixos/services/syncthing.nix
-    ../../modules/nixos/services/flatpak.nix
-    ../../modules/nixos/services/printing.nix
-    ../../modules/nixos/services/touchpad.nix
-
-    ../../modules/nixos/desktop/plasma.nix
+    # === DESKTOP ===
     ../../modules/nixos/desktop/xserver.nix
 
-    ../../modules/nixos/window-managers/hyprland.nix
-    ../../modules/nixos/window-managers/qtile.nix
+    # === WINDOW MANAGERS ===
+    ../../modules/nixos/window-managers/i3.nix
+    # ../../modules/nixos/window-managers/niri.nix
 
+    # === SERVICES ===
+    ../../modules/nixos/services/touchpad.nix
+    ../../modules/nixos/services/printing.nix
+
+    # === PROGRAMS ===
     ../../modules/nixos/programs/fish.nix
 
-    ../../modules/nixos/users
-
+    # === MAINTENANCE ===
     ../../modules/nixos/maintenance/autoupdate.nix
-
-    ../../modules/nixos/hardware/ydotools.nix
   ];
 
-  networking.hostName = "neko-laptop"; # Define your hostname.
+  networking.hostName = "roxy"; # Define your hostname.
+
+  services.displayManager.sddm.enable = true;
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 4096;
+    }
+  ];
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 60;
+    "vm.vfs_cache_pressure" = 50;
+  };
+
+  nix.settings = {
+    max-jobs = 1;
+    cores = 2;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -51,7 +71,7 @@
     neovim
     tmux
 
-    hyprshot
+    scrot
   ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

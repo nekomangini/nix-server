@@ -1,25 +1,40 @@
 { pkgs, ... }:
 
-# TODO:
 {
   imports = [
+    # === EDITORS ===
     ../helix
-    ../qtile
+    ../emacs.nix
+    ../neovim/astronvim.nix
+    ../vim.nix
+    ../kakoune.nix
+
+    # === SHELL ===
     ../shell/fish
     ../shell/scripts.nix
-    ../git.nix
+
+    # === TERMINAL ===
     ../kitty
+
+    # === TOOLS ===
+    ../git.nix
+    ../tmux.nix
     ../yazi.nix
-    ../packages.nix
-    ../emacs.nix
-    ../hyprland
-    ../hyprpaper.nix
-    ../waybar
-    ../fuzzel.nix
-    ../hyprlock.nix
-    ../ydotool.nix
-    ../ruby
+
+    # === WINDOW MANAGER ===
+    ../i3
+    ../dunst
+    ../rofi.nix
+
+    # === SCRIPTS ===
+    # ../packages.nix
   ];
+
+  # Override emacs to use GTK (X11) instead of pgtk (Wayland)
+  myModules.emacs = {
+    package = pkgs.emacs-gtk;
+    enableDartFlutter = false;
+  };
 
   home.username = "nekomangini";
   home.homeDirectory = "/home/nekomangini";
@@ -32,4 +47,18 @@
     EDITOR = "${pkgs.helix}/bin/hx";
     VISUAL = "${pkgs.helix}/bin/hx";
   };
+
+  home.packages = with pkgs; [
+    fd
+    ripgrep
+    fzf
+    zoxide
+    eza
+    fastfetch
+    htop
+    xclip
+    unzip
+    neovim
+    zellij
+  ];
 }
