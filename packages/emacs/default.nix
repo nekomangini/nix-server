@@ -1,5 +1,6 @@
 { pkgs, ... }:
 
+# TODO:
 let
   nekoEmacs = pkgs.emacs-gtk.pkgs.withPackages (epkgs: [
     epkgs.treesit-grammars.with-all-grammars

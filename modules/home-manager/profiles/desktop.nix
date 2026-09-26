@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 {
   imports = [
@@ -46,6 +46,11 @@
     "${config.home.homeDirectory}/.config/nekovim"
     "${config.home.homeDirectory}/.config/astronvim-v5"
   ];
+
+  myModules.emacs = {
+    package = pkgs.emacs-pgtk;
+    enableDartFlutter = true;
+  };
 
   home = {
     username = "nekomangini";

@@ -56,7 +56,7 @@
 
         # laptop
         # TODO
-        neko-laptop = nixpkgs.lib.nixosSystem {
+        roxy = nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/laptop/configuration.nix
 
