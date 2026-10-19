@@ -9,9 +9,8 @@
     shell = pkgs.fish;
 
     openssh.authorizedKeys.keys = [
-      # NOTE LAPTOP(VOID LINUX)
-      # Maaaaaa! pa void
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOlwmNBZHDXRpqpneubWYPGtMZaa2X+Fr5BMuzmkEOq nekomangini.dev@gmail.com"
+      # NOTE LAPTOP(omarchy)
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtbpAFxFyLBjpcXg7fOJUyXp65z+WgQT4qPJe9QfLTI nekomangini.dev@gmail.com"
 
       # NOTE vivo1920
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJg+EOqubgM3M6fIUFnhbXGwxXkQ1CsY7DTIi9k9JOy8 vivo1920"

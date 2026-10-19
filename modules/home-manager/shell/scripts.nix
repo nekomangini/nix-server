@@ -54,11 +54,14 @@ let
   '';
 
   kittySession = pkgs.writeText "kitty-session.conf" ''
+    new_tab emacs
+    launch ${nkt}/bin/nkt
+
     new_tab main
     launch ${tmux}/bin/tmux new-session -A -s main
 
-    new_tab ssh
-    launch ${tmux}/bin/tmux new-session -A -s ssh
+    new_tab tmux-dotfiles
+    launch ${tmux}/bin/tmux new-session -A -s dotfiles
 
     new_tab zellij-logs
     launch ${zellij}/bin/zellij attach --create logs
@@ -66,11 +69,8 @@ let
     new_tab zellij-work
     launch ${zellij}/bin/zellij attach --create work
 
-    new_tab tmux-dotfiles
-    launch ${tmux}/bin/tmux new-session -A -s dotfiles
-
-    new_tab emacs
-    launch ${nkt}/bin/nkt
+    new_tab ssh
+    launch ${tmux}/bin/tmux new-session -A -s ssh
 
     new_tab monitor
     launch ${htop}/bin/htop

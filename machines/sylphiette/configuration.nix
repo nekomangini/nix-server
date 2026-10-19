@@ -4,12 +4,9 @@
 
 { pkgs, ... }:
 
-# TODO:
 {
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    # ./modules/polkit-rules.nix
+    ./modules/polkit-rules.nix
     ./modules/users.nix
     ../../modules/nixos/users
 
@@ -20,46 +17,68 @@
     ../../modules/nixos/core/network.nix
     ../../modules/nixos/core/nixsetting.nix
 
-    # === HARDWARE ===
-    ../../modules/nixos/hardware/audio.nix
+    # === Secrets ===
+    ../../modules/nixos/core/secrets.nix
+    ../../modules/nixos/services/openssh.nix
 
-    # === DESKTOP ===
+    # === Hardware ===
+    ../../modules/nixos/hardware/audio.nix
+    ../../modules/nixos/hardware/nvidia.nix
+    ../../modules/nixos/hardware/ydotools.nix
+    ../../modules/nixos/hardware/bluetooth.nix
+
+    # === Desktop ===
+    ../../modules/nixos/desktop/plasma.nix
     ../../modules/nixos/desktop/xserver.nix
 
-    # === WINDOW MANAGERS ===
+    # === Window Managers ===
+    ../../modules/nixos/window-managers/hyprland.nix
+    ../../modules/nixos/window-managers/qtile.nix
+    ../../modules/nixos/window-managers/niri.nix
     ../../modules/nixos/window-managers/i3.nix
-    # ../../modules/nixos/window-managers/niri.nix
 
-    # === SERVICES ===
-    ../../modules/nixos/services/touchpad.nix
+    # === Services ===
+    ../../modules/nixos/services/kdeconnect.nix
+    ../../modules/nixos/services/flatpak.nix
     ../../modules/nixos/services/printing.nix
+    ../../modules/nixos/services/touchpad.nix
 
-    # === PROGRAMS ===
+    # === Programs ===
     ../../modules/nixos/programs/fish.nix
+    # NOTE
+    # no longer needed in 26.05, use pkgs.android-tools
+    # ../../modules/nixos/programs/adb.nix
 
-    # === MAINTENANCE ===
+    # homelab
+    ../../homelab
+
+    # === Development ===
+    ../../modules/nixos/development/android.nix
+    ../../modules/nixos/development/docker.nix
+    ../../modules/nixos/development/nix-ld.nix
+
+    # === Maintenance ===
     ../../modules/nixos/maintenance/autoupdate.nix
   ];
 
-  networking.hostName = "roxy"; # Define your hostname.
+  # networking.hostName = "neko-desktop"; # Define your hostname.
+  networking = {
+    hostName = "sylphiette";
+    useDHCP = false;
 
-  services.displayManager.sddm.enable = true;
-
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 4096;
-    }
-  ];
-
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 60;
-    "vm.vfs_cache_pressure" = 50;
-  };
-
-  nix.settings = {
-    max-jobs = 1;
-    cores = 2;
+    # Disable NetworkManager because I'm setting the static IP manually
+    networkmanager.enable = false;
+    interfaces.enp3s0.ipv4.addresses = [
+      {
+        address = "192.168.1.200";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "192.168.1.1";
+    nameservers = [
+      "192.168.1.200"
+      "94.140.14.15"
+    ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -67,12 +86,13 @@
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    xdg-utils
-    neovim
-    tmux
+    polkit
+    kdePackages.polkit-kde-agent-1
 
-    scrot
+    # System tools
+    # git
   ];
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

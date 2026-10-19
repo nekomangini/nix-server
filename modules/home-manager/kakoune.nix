@@ -1,8 +1,13 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.kakoune = {
     enable = true;
+
+    plugins = with pkgs.kakounePlugins; [
+      kakoune-lsp
+    ];
+
     extraConfig = ''
       colorscheme plain
 

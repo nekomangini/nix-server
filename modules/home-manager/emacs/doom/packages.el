@@ -77,3 +77,7 @@
 (package! org-caldav)
 
 (package! org-auto-tangle)
+
+;; app launcher
+(package! xdg-launcher
+  :recipe (:host github :repo "emacs-exwm/xdg-launcher"))

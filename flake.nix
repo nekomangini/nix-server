@@ -24,13 +24,12 @@
       system = "x86_64-linux";
     in
     {
-      # WARN: Dead code
-      # homeConfiguration.neko-desktop = home-manager.lib.homeManagerConfiguration { };
       nixosConfigurations = {
         # desktop
         sylphiette = nixpkgs.lib.nixosSystem {
           modules = [
-            ./hosts/sylphiette/configuration.nix
+            # ./machines/sylphiette/configuration.nix
+            ./machines/sylphiette
             agenix.nixosModules.default
 
             {
@@ -47,33 +46,25 @@
               home-manager.backupFileExtension = "bak";
 
               # home-manager.users.nekomangini = import ./home.nix;
-              home-manager.users.nekomangini = import ./modules/home-manager/profiles/desktop.nix;
+              # home-manager.users.nekomangini = import ./modules/home-manager/profiles/desktop.nix;
+              home-manager.users.nekomangini = import ./machines/sylphiette/home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.sharedModules = [ agenix.homeManagerModules.default ];
             }
           ];
         };
+      };
 
-        # laptop
-        # TODO
-        roxy = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./hosts/roxy/configuration.nix
-
-            # make home-manager as a module of nixos
-            # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "bak";
-
-              # home-manager.users.nekomangini = import ./home.nix;
-              home-manager.users.nekomangini = import ./modules/home-manager/profiles/laptop.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-            }
-          ];
+      homeConfigurations.roxy = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          ./machines/roxy/home.nix
+          { targets.genericLinux.enable = true; }
+        ];
       };
     };
 }

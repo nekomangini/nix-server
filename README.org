@@ -1,27 +1,33 @@
 * nix-server
 
-My personal NixOS configuration — desktop, laptop, and a self-hosted home lab, all managed as a single flake with Home Manager as a NixOS module and secrets encrypted with agenix.
+My personal Nix configuration: a NixOS desktop and home lab, plus a laptop running Omarchy with standalone Home Manager. Everything is managed as a single flake, with Home Manager as a NixOS module on the desktop and secrets encrypted with agenix.
 
-** Hosts
+** Machines
 
-|--------------+------------+--------------------------------------------------------------------------------------|
-| Hostname     | Role       | Notes                                                                                |
-|--------------+------------+--------------------------------------------------------------------------------------|
-| =sylphiette= | 🖥️ Desktop | i3-7100, 16GB RAM, GTX 1050 Ti · static IP =192.168.1.200= · runs the home lab stack |
-| =roxy=       | 💻 Laptop  | WIP                                                                                  |
-| =eris=       | -          | -                                                                                    |
-|--------------+------------+--------------------------------------------------------------------------------------|
+|--------------+------------+----------------+---------------------------------------------------------------------------------------|
+| Name         | Role       | System         | Notes                                                                                 |
+|--------------+------------+----------------+---------------------------------------------------------------------------------------|
+| =sylphiette= | 🖥️ Desktop | NixOS          | i3-7100, 16GB RAM, GTX 1050 Ti · static IP =192.168.1.200= · runs the home lab stack  |
+| =roxy=       | 💻 Laptop  | Omarchy (Arch) | IdeaPad 120S, 2GB RAM · standalone Home Manager (=homeConfigurations.roxy=), no NixOS |
+| =eris=       | -          | -              | -                                                                                     |
+|--------------+------------+----------------+---------------------------------------------------------------------------------------|
 
 ** Structure
 
 #+begin_src md
 .
-├── flake.nix                            # entrypoint: nixosConfigurations for sylphiette / roxy / eris
-├── hosts/
-│   ├── sylphiette/                      # configuration.nix, hardware-configuration.nix, users
+├── flake.nix                            # entrypoint: nixosConfigurations.sylphiette, homeConfigurations.roxy
+├── machines/                            # one folder per machine
+│   ├── sylphiette/                      # NixOS desktop
+│   │   ├── default.nix                  # NixOS entry point (imports configuration.nix)
+│   │   ├── configuration.nix
+│   │   ├── hardware-configuration.nix
+│   │   ├── home.nix                     # Home Manager profile (wired in flake.nix)
+│   │   └── modules/                     # polkit rules, users
 │   └── roxy/
+│       └── home.nix                     # Home Manager profile for the Omarchy laptop
 ├── modules/
-│   ├── nixos/                           # system-level modules
+│   ├── nixos/                           # system-level modules (NixOS only)
 │   │   ├── core/                        # boot, locale, networking, nix settings, secrets
 │   │   ├── desktop/                     # xserver, Plasma
 │   │   ├── development/                 # Android, Docker, nix-ld
@@ -30,14 +36,14 @@ My personal NixOS configuration — desktop, laptop, and a self-hosted home lab,
 │   │   ├── programs/ & services/        # fish, ssh, printing, KDE Connect, touchpad, adb
 │   │   ├── users/
 │   │   └── window-managers/             # Hyprland, i3, Niri, Qtile
-│   └── home-manager/                    # user-level modules
-│       ├── profiles/                    # desktop.nix / laptop.nix entrypoints
+│   └── home-manager/                    # user-level modules, shared by both machines
 │       ├── hyprland/ i3/ niri/ qtile/   # per-compositor config
 │       ├── helix/                       # editor + LSPs
+│       ├── emacs/                       # Doom config (symlinked) + Emacs package/daemon
 │       ├── kitty/ waybar/ dunst/ rofi.nix / fuzzel.nix
 │       ├── shell/fish/                  # aliases, functions, keybinds
 │       ├── ruby/                        # Rails dev environment
-│       └── ...                          # git, tmux, emacs, neovim, vim, kdeconnect, android, packages
+│       └── ...                          # git, tmux, neovim, vim, kdeconnect, android, packages
 ├── homelab/                             # one module per self-hosted service (see below)
 ├── packages/                            # Raku CLI tooling, packaged as Nix derivations
 ├── secrets/                             # agenix-encrypted secrets + secrets.nix
@@ -108,14 +114,28 @@ Raku-based CLI tools packaged as Nix derivations and wired into the shell:
 ** Usage
 
 #+begin_src bash
-# rebuild the desktop
+# rebuild the desktop (NixOS)
 sudo nixos-rebuild switch --flake .#sylphiette
 
-# rebuild the laptop
-sudo nixos-rebuild switch --flake .#roxy
+# rebuild the laptop (Omarchy, standalone Home Manager)
+home-manager switch --flake .#roxy
 #+end_src
 
 Secrets are managed with agenix — see =secrets/secrets.nix= for the recipient list before rekeying.
+
+*** Laptop (Omarchy)
+
+The laptop runs Omarchy, not NixOS, so only the user environment comes from this repo. Clone it to =~/nix-server= (the Doom config is symlinked from there), install Nix with flakes enabled, then:
+
+#+begin_src bash
+# first run (installs the home-manager command)
+nix run home-manager/release-26.05 -- switch --flake .#roxy -b backup
+
+# afterwards
+home-manager switch --flake .#roxy
+#+end_src
+
+Emacs itself is installed with pacman. This repo only provides the Doom config and the =EDITOR= settings. Everything under =modules/nixos/= is NixOS-only and is never evaluated for =roxy=.
 
 ** TODOs
 
