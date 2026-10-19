@@ -36,8 +36,18 @@ ${10:Documentation note}
 * 📝 UNSTRUCTURED NOTES
 *** ${11:Notes}
 
+* 💪 HEALTH LOG
+** Workout
+- ${12:Workout}
+
+** Meals
+- ${13:Meals}
+
+** Notes
+- ${14:Health notes}
+
 * 💾 END-OF-DAY SAVE POINT
 ** What I was doing:
-${12:Activity}
+${15:Activity}
 ** What to do first tomorrow:
-${13:Next steps}
+${16:Next steps}

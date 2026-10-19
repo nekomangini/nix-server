@@ -418,6 +418,7 @@ window-rule {
 window-rule {
     match app-id=r#"^emacs$"#
     open-maximized true
+    open-focused true
     draw-border-with-background false
     opacity 0.8
     background-effect {
@@ -426,6 +427,13 @@ window-rule {
         noise 0.02
         saturation 1.0
     }
+}
+
+// floating emacs launcher(rofi/fuzzel alternative)
+window-rule {
+    match app-id="emacs" title="emacs-run-launcher"
+    open-floating true
+    default-column-width { fixed 800; }
 }
 
 window-rule {
@@ -480,6 +488,8 @@ binds {
 
     Mod+Shift+E { spawn "doom-foot-terminal"; }
     Mod+E       { spawn "emacsclient" "-c" "-a" ""; }
+    // Mod+Y       { spawn "emacsclient" "-c" "-a" "" "-e" "(dirvish)"; }
+    // Mod+Y       { spawn "emacsclient" "-e" "(emacs-run-launcher)";}
     Mod+B       { spawn "wayland-websearch"; }
     Mod+X       { spawn "niri-powermenu"; }
 

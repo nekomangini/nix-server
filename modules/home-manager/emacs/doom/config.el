@@ -140,6 +140,13 @@
    consult-bookmark consult-recent-file consult-xref
    :preview-key '(:debounce 0.4 any)))
 
+;; Embark for quick actions
+(map! :leader
+      (:prefix ("k" . "embark")
+       :desc "Embark act" "a" #'embark-act
+       :desc "Embark dwim" "d" #'embark-dwim
+       :desc "Embark collect" "c" #'embark-collect))
+
 ;; Consult-dir for directory jumping
 (use-package! consult-dir
   :bind (("C-x C-d" . consult-dir)
@@ -147,12 +154,9 @@
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
-;; Embark for quick actions
+;; Dirvish
 (map! :leader
-      (:prefix ("k" . "embark")
-       :desc "Embark act" "a" #'embark-act
-       :desc "Embark dwim" "d" #'embark-dwim
-       :desc "Embark collect" "c" #'embark-collect))
+      :desc "Dirvish" "e" #'dirvish)
 
 ;;; ============================================================================
 ;; AUTO COMPLETION SETUP
@@ -435,18 +439,6 @@
            :hook (lambda () (yas-expand-snippet (yas-lookup-snippet "Daily Log Entry"))))
 
           ;; Specialized logs
-          ("h" "Health" plain
-           (file
-            (lambda ()
-              (let* ((year (format-time-string "%Y"))
-                     (date (format-time-string "%Y-%m-%d"))
-                     (path (format "/mnt/D/notes/journal/health/%s/%s.org" year date)))
-                (make-directory (file-name-directory path) t)
-                path)))
-           "%?"
-           :unnarrowed t
-           :hook (lambda () (yas-expand-snippet (yas-lookup-snippet "Health Log Entry"))))
-
           ("r" "Dream" entry
            (file+headline
             (lambda ()
@@ -687,6 +679,27 @@
 ;;; ============================================================================
 ;;; Caldav Calendar
 ;;; ============================================================================
+
+(use-package! xdg-launcher
+  :commands (xdg-launcher-run-app))
+
+(defun emacs-run-launcher ()
+  "Open a minibuffer-only frame, run the app launcher, then close the frame."
+  (interactive)
+  (with-selected-frame
+      (make-frame '((name . "emacs-run-launcher")
+                    (minibuffer . only)
+                    (fullscreen . 0) ;; no fullscreen
+                    (undecorated . t) ;; remove title bar
+                    (internal-border-width . 10)
+                    (width . 80)
+                    (height . 11)))
+    (unwind-protect
+        (xdg-launcher-run-app)
+      (delete-frame))))
+
+(map! :leader
+      :desc "Launch application" "d" #'xdg-launcher-run-app)
 
 ;; Here are some additional functions/macros that will help you configure Doom.
 ;;

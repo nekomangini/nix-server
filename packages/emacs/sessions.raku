@@ -5,7 +5,7 @@ constant %PATHS = (
     notes    => "/mnt/D/notes",
     raku     => "/mnt/D/dev/02-areas/scripts",
     dotfiles => "/home/nekomangini/nix-server",
-    blog     => "/mnt/D/notes/01-para/02-areas/media/blogs"
+    blog     => "/mnt/D/notes/blog.org"
 );
 
 sub MAIN(Str $session?) {
@@ -22,14 +22,14 @@ sub MAIN(Str $session?) {
                     echo "Notes workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: ~/sync/notes
+                Directory: /mnt/D/notes
                 Buffer: Dired"
 
                 case raku
                     echo "Raku workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: ~/Programming/scripts
+                Directory: /mnt/D/dev/02-areas/scripts
                 Buffer: Dired"
 
                 case dotfiles
@@ -43,7 +43,7 @@ sub MAIN(Str $session?) {
                     echo "Blog workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: ~/sync/notes/01-para/02-areas/media/blogs
+                Directory: /mnt/D/notes/blog.org
                 Buffer: Dired"
 
                 case quit
