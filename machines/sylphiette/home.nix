@@ -42,7 +42,7 @@
     "/home/nekomangini/nix-server"
     "/mnt/D/dev/01-projects"
     "/mnt/D/dev/02-areas/scripts"
-    "/mnt/D/notes"
+    "/home/nekomangini/notes"
     "/mnt/D/game-development"
     "${config.home.homeDirectory}/.config/nekovim"
     "${config.home.homeDirectory}/.config/astronvim-v5"

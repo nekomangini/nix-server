@@ -242,6 +242,7 @@
 ;; change `org-directory'. It must be set before org loads!
 ;; NOTE: old directory (setq org-directory "/run/media/nekomangini/D/emacs-org-sync/")
 ;; (setq org-directory "/mnt/D/notes")
+;; (setq org-directory "/home/nekomangini/notes/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -263,7 +264,7 @@
 
 (after! org
   ;; Canonical location
-  (setq org-directory "/mnt/D/notes")
+  (setq org-directory "/home/nekomangini/notes/")
 
   ;; ─────────────────────────────────────────────────────────────────────────
   ;; TODO keywords
@@ -327,14 +328,14 @@
 
 ;; Initialize with base directories (dynamic will expand from here)
 (setq org-agenda-files
-      '("/mnt/D/notes/inbox.org"
-        "/mnt/D/notes/journal/daily/"
-        "/mnt/D/notes/journal/weekly/"
-        "/mnt/D/notes/journal/dream/"
-        "/mnt/D/notes/journal/profit/"
-        "/mnt/D/notes/journal/motorcycle/"
-        "/mnt/D/notes/journal/bike/"
-        "/mnt/D/notes/journal/spanish/"))
+      '("/home/nekomangini/notes/inbox.org"
+        "/home/nekomangini/notes/journal/daily/"
+        "/home/nekomangini/notes/journal/weekly/"
+        "/home/nekomangini/notes/journal/dream/"
+        "/home/nekomangini/notes/journal/profit/"
+        "/home/nekomangini/notes/journal/motorcycle/"
+        "/home/nekomangini/notes/journal/bike/"
+        "/home/nekomangini/notes/journal/spanish/"))
 
 ;; Remember org-agenda-files between sessions
 ;; (add-to-list 'savehist-additional-variables 'org-agenda-files)
@@ -421,7 +422,7 @@
   (setq org-capture-templates
         '(;; Inbox
           ("i" "Inbox" entry
-           (file "/mnt/D/notes/inbox.org")
+           (file "/home/nekomangini/notes/inbox.org")
            "* %?\n%U\n"
            :empty-lines 1)
 
@@ -431,7 +432,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d"))
-                     (path (format "/mnt/D/notes/journal/daily/%s/%s.org" year date)))
+                     (path (format "/home/nekomangini/notes/journal/daily/%s/%s.org" year date)))
                 (make-directory (file-name-directory path) t)
                 path)))
            "%?"
@@ -444,7 +445,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/mnt/D/notes/journal/dream/%s/%s.org" year date)))
+                (format "/home/nekomangini/notes/journal/dream/%s/%s.org" year date)))
             "Dream")
            "* %?\n%U\n"
            :empty-lines 1)
@@ -454,7 +455,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/mnt/D/notes/journal/profit/%s/%s.org" year date)))
+                (format "/home/nekomangininotes/journal/profit/%s/%s.org" year date)))
             "Notes")
            "* %?\n%U\n"
            :empty-lines 1)
@@ -464,7 +465,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/mnt/D/notes/journal/motorcycle/%s/%s.org" year date)))
+                (format "/home/nekomangini/notes/journal/motorcycle/%s/%s.org" year date)))
             "Motorcycle Notes")
            "* %?\n%U\n"
            :empty-lines 1)
@@ -474,7 +475,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/mnt/D/notes/journal/bike/%s/%s.org" year date)))
+                (format "/home/nekomangini/notes/journal/bike/%s/%s.org" year date)))
             "Bike Notes")
            "* %?\n%U\n"
            :empty-lines 1)
@@ -484,7 +485,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/mnt/D/notes/journal/spanish/%s/%s.org" year date)))
+                (format "/home/nekomangini/notes/journal/spanish/%s/%s.org" year date)))
             "Notes")
            "* %?\n%U\n"
            :empty-lines 1))))

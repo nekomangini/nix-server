@@ -9,7 +9,7 @@ My personal Nix configuration: a NixOS desktop and home lab, plus a laptop runni
 |--------------+------------+----------------+---------------------------------------------------------------------------------------|
 | =sylphiette= | 🖥️ Desktop | NixOS          | i3-7100, 16GB RAM, GTX 1050 Ti · static IP =192.168.1.200= · runs the home lab stack  |
 | =roxy=       | 💻 Laptop  | Omarchy (Arch) | IdeaPad 120S, 2GB RAM · standalone Home Manager (=homeConfigurations.roxy=), no NixOS |
-| =eris=       | -          | -              | -                                                                                     |
+| =eris=       | 💻 Laptop  | -              | Acer Aspire                                                                           |
 |--------------+------------+----------------+---------------------------------------------------------------------------------------|
 
 ** Structure
