@@ -3,7 +3,7 @@ use v6.d;
 
 constant %PATHS = (
     DOTFILES_PATH => '/home/nekomangini/nix-server',
-    NOTES_PATH    => '/mnt/D/notes',
+    NOTES_PATH    => '/home/nekomangini/notes',
     PROJECT_PATH  => '/mnt/D/dev/01-projects',
 );
 

@@ -31,7 +31,7 @@ layout {
 
     tab name="notes" {
         pane name="emacs" command="sh" {
-            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/mnt/D/notes\")'"
+            args "-c" "exec emacsclient -nw -a '' -e '(dired \"/home/nekomangini/notes\")'"
         }
     }
 }

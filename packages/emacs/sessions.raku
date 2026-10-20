@@ -2,10 +2,10 @@
 use v6.d;
 
 constant %PATHS = (
-    notes    => "/mnt/D/notes",
+    notes    => "/home/nekomangini/notes",
     raku     => "/mnt/D/dev/02-areas/scripts",
     dotfiles => "/home/nekomangini/nix-server",
-    blog     => "/mnt/D/notes/blog.org"
+    blog     => "/home/nekomangini/notes/blog.org"
 );
 
 sub MAIN(Str $session?) {
@@ -22,7 +22,7 @@ sub MAIN(Str $session?) {
                     echo "Notes workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: /mnt/D/notes
+                Directory: /home/nekomangini/notes
                 Buffer: Dired"
 
                 case raku
@@ -43,7 +43,7 @@ sub MAIN(Str $session?) {
                     echo "Blog workspace
 
                 Opens Doom Emacs (terminal)
-                Directory: /mnt/D/notes/blog.org
+                Directory: /home/nekomangini/notes/blog.org
                 Buffer: Dired"
 
                 case quit

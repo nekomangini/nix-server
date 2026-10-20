@@ -14,7 +14,7 @@
     settings = {
       folders = {
         "notes" = {
-          path = "/mnt/D/notes";
+          path = "/home/nekomangini/notes";
           devices = [
             "SM-A057F"
             "vivo-1920"
