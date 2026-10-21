@@ -2,6 +2,13 @@
 
 {
   programs.alacritty.settings = {
-    font.normal.family = "JetBrainsMono Nerd Font";
+    font = {
+      size = 10.0;
+
+      normal = {
+        family = "JetBrainsMono Nerd Font";
+        style = "Regular";
+      };
+    };
   };
 }
