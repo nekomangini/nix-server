@@ -63,14 +63,14 @@ let
     new_tab tmux-dotfiles
     launch ${tmux}/bin/tmux new-session -A -s dotfiles
 
-    new_tab zellij-logs
-    launch ${zellij}/bin/zellij attach --create logs
+    new_tab ssh
+    launch ${tmux}/bin/tmux new-session -A -s ssh
 
     new_tab zellij-work
     launch ${zellij}/bin/zellij attach --create work
 
-    new_tab ssh
-    launch ${tmux}/bin/tmux new-session -A -s ssh
+    new_tab zellij-logs
+    launch ${zellij}/bin/zellij attach --create logs
 
     new_tab monitor
     launch ${htop}/bin/htop
@@ -82,20 +82,12 @@ in
 {
   home.packages = with pkgs; [
     # ===== Emacs =====
-    (writeShellScriptBin "nkt" ''
-      exec ${emacs}/bin/emacsclient -nw -a "" "$@"
-    '')
-
+    nkt
     (writeShellScriptBin "doom-terminal" ''
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""
     '')
 
     # ===== Wayland =====
-    # TEST
-    # (writeShellScriptBin "hed" ''
-    #   exec ${emacs-pgtk}/bin/emacsclient -nw
-    # '')
-
     # NOTE: Used in wayland session
     (writeShellScriptBin "doom-foot-terminal" ''
       if ! ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a "" 2>/dev/null; then
