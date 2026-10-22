@@ -355,6 +355,20 @@ animations {
     // slowdown 3.0
 }
 
+// Workspace rules
+workspace "1" {
+    open-on-output "DVI-D-1"
+}
+
+workspace "terminal" {
+    open-on-output "HDMI-A-1"
+}
+
+workspace "emacs" {
+    open-on-output "HDMI-A-1"
+}
+
+
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
@@ -411,6 +425,7 @@ window-rule {
     draw-border-with-background false
     variable-refresh-rate false
     clip-to-geometry true
+    open-on-workspace "1"
 }
 
 
@@ -421,6 +436,7 @@ window-rule {
     open-focused true
     draw-border-with-background false
     opacity 0.8
+    open-on-workspace "emacs"
     background-effect {
         xray true
         blur true
@@ -444,6 +460,7 @@ window-rule {
     open-fullscreen true
     draw-border-with-background false
     opacity 0.8
+    open-on-workspace "terminal"
     background-effect {
         xray true
         blur true

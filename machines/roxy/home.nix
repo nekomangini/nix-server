@@ -9,8 +9,10 @@
     ../../modules/home-manager/kakoune.nix
 
     # === SHELL ===
-    # TODO:
     ../../modules/home-manager/shell/fish
+
+    # === SERVICES ===
+    ../../modules/home-manager/syncthing
   ];
 
   home = {
