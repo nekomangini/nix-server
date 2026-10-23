@@ -18,7 +18,7 @@
           devices = [
             "SM-A057F"
             "vivo-1920"
-            "void-nekomangini"
+            "roxy"
           ];
         };
       };
@@ -30,8 +30,8 @@
         "vivo-1920" = {
           id = "26TUQQW-EDFBM26-TT4X7KL-5VZCNGY-QFJD3TW-FO7XOBU-OVA7SKD-FIZSZQF";
         };
-        "void-nekomangini" = {
-          id = "HR33SED-ARJB5UU-R3FCZE5-WGCRGC3-CEI7KYW-2RSEKQL-VCLDSUF-XPZUMQJ";
+        "roxy" = {
+          id = "DCND4CA-KPTHUN7-RKLXQD5-U34XAWE-ROJAFWE-4LEMF2Y-APC663I-CH2HLQZ";
         };
       };
     };
