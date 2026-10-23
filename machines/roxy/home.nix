@@ -3,8 +3,7 @@
 {
   imports = [
     # === EDITORS ===
-    # FIX emacs treesitter/grammars
-    ../../modules/home-manager/emacs/doom.nix
+    ../../modules/home-manager/emacs
     # TODO:
     ../../modules/home-manager/kakoune.nix
 
