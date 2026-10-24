@@ -10,7 +10,9 @@ let
   awww = pkgs.awww;
   fuzzel = pkgs.fuzzel;
   eza = pkgs.eza;
+  emacs = config.programs.emacs.package;
 
+  # ===== WALLPAPER =====
   wallDir = "${config.home.homeDirectory}/nix-server/wallpaper";
 
   wallpaperPicker =
@@ -42,17 +44,23 @@ let
     esac
   '';
 
-  # emacs = pkgs.emacs-gtk;
-  # emacs = pkgs.emacs-pgtk.pkgs.withPackages (epkgs: [
-  #   epkgs.treesit-grammars.with-all-grammars
-  # ]);
-
-  emacs = config.programs.emacs.package;
-
+  # ===== Emacs =====
   nkt = pkgs.writeShellScriptBin "nkt" ''
     exec ${emacs}/bin/emacsclient -nw -a "" "$@"
   '';
 
+  emacs-gui = pkgs.writeShellScriptBin "emacs-gui" ''
+    id=$(niri msg --json windows \
+      | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
+
+    if [ -n "$id" ]; then
+      exec niri msg action focus-window --id "$id"
+    else
+      exec ${emacs}/bin/emacsclient -c -n -a ""
+    fi
+  '';
+
+  # ===== KITTY =====
   kittySession = pkgs.writeText "kitty-session.conf" ''
     new_tab emacs
     launch ${nkt}/bin/nkt
@@ -83,6 +91,8 @@ in
   home.packages = with pkgs; [
     # ===== Emacs =====
     nkt
+    emacs-gui
+
     (writeShellScriptBin "doom-terminal" ''
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""
     '')

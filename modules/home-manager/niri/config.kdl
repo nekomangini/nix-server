@@ -504,7 +504,8 @@ binds {
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
     Mod+Shift+E { spawn "doom-foot-terminal"; }
-    Mod+E       { spawn "emacsclient" "-c" "-a" ""; }
+    // Mod+E       { spawn "emacsclient" "-c" "-a" ""; }
+    Mod+E       { spawn "emacs-gui"; }
     // Mod+Y       { spawn "emacsclient" "-c" "-a" "" "-e" "(dirvish)"; }
     // Mod+Y       { spawn "emacsclient" "-e" "(emacs-run-launcher)";}
     Mod+B       { spawn "wayland-websearch"; }
