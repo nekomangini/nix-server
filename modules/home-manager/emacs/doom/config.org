@@ -787,6 +787,17 @@ Org-auto-tangle
 ;;; ============================================================================
 ;;; Caldav Calendar
 ;;; ============================================================================
+(use-package org-caldav
+  :ensure t
+  :after org
+  :config
+  (setq org-caldav-url "http://radicale.home/nekomangini"
+      org-caldav-calendar-id "a2c511d9-9eee-f519-3e60-d64191c1dac2"
+      org-caldav-inbox "~/notes/calendar-inbox.org"
+      org-caldav-files '("~/notes/agenda.org")
+
+      org-caldav-sync-direction 'twoway
+      org-caldav-save-directory "~/notes/.org-caldav-sync/"))
 #+end_src
 
 * App Launcher

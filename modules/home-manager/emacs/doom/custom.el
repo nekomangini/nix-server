@@ -6,7 +6,8 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(org-agenda-files
-   '("/home/nekomangini/notes/someday.org" "/home/nekomangini/notes/music.org"
+   '("~/notes/agenda.org" "/home/nekomangini/notes/calendar-inbox.org"
+     "/home/nekomangini/notes/someday.org" "/home/nekomangini/notes/music.org"
      "/home/nekomangini/notes/routine-guide.org"
      "/home/nekomangini/notes/media.org" "/home/nekomangini/notes/projects.org"
      "/home/nekomangini/notes/inbox.org" "/home/nekomangini/notes/blog.org")))
