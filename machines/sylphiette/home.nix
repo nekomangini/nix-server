@@ -13,6 +13,8 @@
     ../../modules/home-manager/git.nix
     ../../modules/home-manager/yazi.nix
 
+    ../../modules/home-manager/gpg.nix
+
     ../../modules/home-manager/packages
     ../../modules/home-manager/android.nix
     ../../modules/home-manager/ruby

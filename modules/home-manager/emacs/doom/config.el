@@ -713,6 +713,9 @@
 (map! :leader
       :desc "Launch application" "d" #'xdg-launcher-run-app)
 
+;; Make Emacs ask in its own minibuffer
+(setq epg-pinentry-mode 'loopback)
+
 ;; Here are some additional functions/macros that will help you configure Doom.
 ;;
 ;; - `load!' for loading external *.el files relative to this one

@@ -29,6 +29,7 @@
 - [[#mermaid][Mermaid]]
 - [[#caldav-calendar][Caldav Calendar]]
 - [[#app-launcher][App Launcher]]
+- [[#encryption][Encryption]]
 - [[#notes][Notes]]
 
 * Initial Setup
@@ -822,6 +823,11 @@ Org-auto-tangle
 
 (map! :leader
       :desc "Launch application" "d" #'xdg-launcher-run-app)
+#+end_src
+* Encryption
+#+begin_src elisp
+;; Make Emacs ask in its own minibuffer
+(setq epg-pinentry-mode 'loopback)
 #+end_src
 * Notes
 #+begin_src elisp
