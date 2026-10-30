@@ -7,14 +7,20 @@
         { class = "^brave-browser$"; }
         { class = "^gwenview$"; }
         { class = "^Zathura$"; }
-        { class = "^Godot$"; }
-        { class = "^Blender$"; }
       ];
+
       "9" = [
+        { class = "^kitty$"; }
+        { class = "^dev.zed.Zed$"; }
+        { class = "^jetbrains-studio$"; }
+        { class = "^Emacs$"; }
+        { class = "^okular$"; }
+        { class = "^io.github.alainm23.planify$"; }
+      ];
+
+      "10" = [
         { class = "^Vivaldi-stable$"; }
         { class = "^helium$"; }
-        # { class = "^ticktick$"; }
-        { class = "^io.github.alainm23.planify$"; }
         { class = "^dolphin$"; }
         { class = "^krita$"; }
         { class = "^obsidian$"; }
@@ -22,15 +28,10 @@
         { class = "^Joplin$"; }
         { class = "^kdeconnect-app$"; }
         { class = "^PixiEditor.Desktop$"; }
+        { class = "^Blender$"; }
+        { class = "^Godot$"; }
       ];
 
-      "10" = [
-        { class = "^kitty$"; }
-        { class = "^dev.zed.Zed$"; }
-        { class = "^jetbrains-studio$"; }
-        { class = "^Emacs$"; }
-        { class = "^okular$"; }
-      ];
     };
 
     workspaceOutputAssign = [
@@ -40,11 +41,11 @@
       }
       {
         workspace = "9";
-        output = "DVI-D-0";
+        output = "HDMI-0";
       }
       {
         workspace = "10";
-        output = "HDMI-0";
+        output = "DVI-D-0";
       }
     ];
   };

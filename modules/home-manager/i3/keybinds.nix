@@ -33,7 +33,7 @@ in
         "${mod}+e" = "exec ${emacsclient} -c";
 
         # NOTE: Check modules/scripts/x11-powermenu.nix
-        "${mod}+p" = "exec x-powermenu";
+        "${mod}+x" = "exec x-powermenu";
 
         # NOTE: Check modules/scripts/x11-webseach.nix
         "${mod}+b" = "exec x11-websearch";
@@ -67,8 +67,8 @@ in
         "${mod}+Tab" = "workspace back_and_forth";
         "${mod}+backslash" = "workspace back_and_forth";
         "${mod}+u" = "[urgent=latest] focus";
-        "${mod}+o" = "workspace next";
-        "${mod}+i" = "workspace prev";
+        "${mod}+n" = "workspace next";
+        "${mod}+p" = "workspace prev";
 
         # Workspaces 1-10
         "${mod}+1" = "workspace number 1";
