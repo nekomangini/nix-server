@@ -26,5 +26,8 @@
     xdotool
     appimage-run
     exiftool
+    autorandr
+    tldr
+    arandr
   ];
 }

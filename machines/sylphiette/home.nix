@@ -14,6 +14,7 @@
     ../../modules/home-manager/yazi.nix
 
     ../../modules/home-manager/gpg.nix
+    ../../modules/home-manager/autorandr
 
     ../../modules/home-manager/packages
     ../../modules/home-manager/android.nix
