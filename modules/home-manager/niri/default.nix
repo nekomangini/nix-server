@@ -14,4 +14,6 @@ in
   home.packages = with pkgs; [
     awww
   ];
+
+  myModules.emacs.sessions.niri = pkgs.emacs-pgtk;
 }

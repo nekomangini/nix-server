@@ -36,4 +36,6 @@
       }
     '';
   };
+
+  myModules.emacs.sessions.i3 = pkgs.emacs-gtk;
 }
