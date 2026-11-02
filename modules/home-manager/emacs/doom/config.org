@@ -19,6 +19,7 @@
   - [[#org-agenda][Org Agenda]]
   - [[#org-capture-templates][Org Capture Templates]]
   - [[#org-tangle][Org tangle]]
+- [[#orgroam][Orgroam]]
 - [[#dev][Dev]]
   - [[#dartflutter][Dart/Flutter]]
   - [[#go][Go]]
@@ -574,6 +575,10 @@ Org-auto-tangle
   :config
   (setq org-auto-tangle-default t))
 #+end_src
+* Orgroam
+#+begin_src emacs-lisp
+(setq org-roam-directory "~/notes/roam/")
+#+end_src
 * Dev
 ** Dart/Flutter
 #+begin_src elisp
@@ -581,17 +586,24 @@ Org-auto-tangle
 ;; DART/FLUTTER SETUP
 ;;; ============================================================================
 
+;; (after! lsp-dart
+;;   (setq lsp-dart-sdk-dir
+;;         (or (getenv "DART_SDK")        ; try Nix env var first
+;;             (string-trim               ; fall back to runtime resolution
+;;              (shell-command-to-string
+;;               "dirname $(dirname $(readlink -f $(which dart)))")))
+;;         lsp-dart-flutter-sdk-dir
+;;         (or (getenv "FLUTTER_ROOT")
+;;             (string-trim
+;;              (shell-command-to-string
+;;               "dirname $(readlink -f $(which flutter))")))))
+
 (after! lsp-dart
-  (setq lsp-dart-sdk-dir
-        (or (getenv "DART_SDK")        ; try Nix env var first
-            (string-trim               ; fall back to runtime resolution
-             (shell-command-to-string
-              "dirname $(dirname $(readlink -f $(which dart)))")))
-        lsp-dart-flutter-sdk-dir
-        (or (getenv "FLUTTER_ROOT")
-            (string-trim
-             (shell-command-to-string
-              "dirname $(readlink -f $(which flutter))")))))
+  (setq lsp-dart-sdk-dir (getenv "DART_SDK")
+        lsp-dart-flutter-sdk-dir (getenv "FLUTTER_ROOT")))
+
+(after! flutter
+  (setq flutter-sdk-path (file-name-as-directory (getenv "FLUTTER_ROOT"))))
 #+end_src
 
 ** Go
@@ -717,49 +729,50 @@ Org-auto-tangle
 #+end_src
 
 * System clipboard
+Using tty instead of this code. Check the init.el
 #+begin_src elisp
 ;;; ============================================================================
 ;; Enable system clipboard
 ;;; ============================================================================
 
 ;; Terminal Emacs clipboard integration - Wayland + X11
-(unless (display-graphic-p)
-  ;; Wayland support (Niri)
-  (when (and (executable-find "wl-paste") (executable-find "wl-copy"))
-    (defun wl-copy (text)
-      "Send text to the Wayland clipboard."
-      (let ((wl-copy-process (make-process :name "wl-copy"
-                                           :command '("wl-copy")
-                                           :connection-type 'pipe)))
-        (process-send-string wl-copy-process text)
-        (process-send-eof wl-copy-process)))
+;; (unless (display-graphic-p)
+;;   ;; Wayland support (Niri)
+;;   (when (and (executable-find "wl-paste") (executable-find "wl-copy"))
+;;     (defun wl-copy (text)
+;;       "Send text to the Wayland clipboard."
+;;       (let ((wl-copy-process (make-process :name "wl-copy"
+;;                                            :command '("wl-copy")
+;;                                            :connection-type 'pipe)))
+;;         (process-send-string wl-copy-process text)
+;;         (process-send-eof wl-copy-process)))
 
-    (defun wl-paste ()
-      "Return the contents of the Wayland clipboard as a string, or nil."
-      (let ((wl-paste-output (with-temp-buffer
-                               (call-process "wl-paste" nil t nil)
-                               (buffer-string))))
-        (when (and wl-paste-output (not (string= wl-paste-output "")))
-          (replace-regexp-in-string "\n\\'" "" wl-paste-output))))
+;;     (defun wl-paste ()
+;;       "Return the contents of the Wayland clipboard as a string, or nil."
+;;       (let ((wl-paste-output (with-temp-buffer
+;;                                (call-process "wl-paste" nil t nil)
+;;                                (buffer-string))))
+;;         (when (and wl-paste-output (not (string= wl-paste-output "")))
+;;           (replace-regexp-in-string "\n\\'" "" wl-paste-output))))
 
-    (setq interprogram-paste-function 'wl-paste)
-    (setq interprogram-cut-function 'wl-copy)
-    (setq select-enable-clipboard t))
+;;     (setq interprogram-paste-function 'wl-paste)
+;;     (setq interprogram-cut-function 'wl-copy)
+;;     (setq select-enable-clipboard t))
 
-  ;; X11 fallback (qtile, i3)
-  (when (and (not (and (executable-find "wl-paste") (executable-find "wl-copy")))
-             (executable-find "xclip"))
-    (defun copy-to-xclip (text &optional push)
-      (let ((process-connection-type nil))
-        (start-process "xclip-write" nil "xclip" "-selection" "clipboard")
-        (process-send-string nil text)
-        (process-send-eof nil)))
+;;   ;; X11 fallback (qtile, i3)
+;;   (when (and (not (and (executable-find "wl-paste") (executable-find "wl-copy")))
+;;              (executable-find "xclip"))
+;;     (defun copy-to-xclip (text &optional push)
+;;       (let ((process-connection-type nil))
+;;         (start-process "xclip-write" nil "xclip" "-selection" "clipboard")
+;;         (process-send-string nil text)
+;;         (process-send-eof nil)))
 
-    (defun paste-from-xclip ()
-      (shell-command-to-string "xclip -o -selection clipboard"))
+;;     (defun paste-from-xclip ()
+;;       (shell-command-to-string "xclip -o -selection clipboard"))
 
-    (setq interprogram-cut-function #'copy-to-xclip)
-    (setq interprogram-paste-function #'paste-from-xclip)))
+;;     (setq interprogram-cut-function #'copy-to-xclip)
+;;     (setq interprogram-paste-function #'paste-from-xclip)))
 #+end_src
 
 * Snippets

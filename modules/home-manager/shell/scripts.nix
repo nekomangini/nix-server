@@ -44,17 +44,40 @@ let
     esac
   '';
 
-  # ===== Emacs =====
+  # ===== Emacs Terminal =====
   nkt = pkgs.writeShellScriptBin "nkt" ''
     exec ${emacs}/bin/emacsclient -nw -a "" "$@"
   '';
 
+  # ===== Niri Emacs =====
   emacs-gui = pkgs.writeShellScriptBin "emacs-gui" ''
     id=$(niri msg --json windows \
       | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
 
     if [ -n "$id" ]; then
       exec niri msg action focus-window --id "$id"
+    else
+      exec ${emacs}/bin/emacsclient -c -n -a ""
+    fi
+  '';
+
+  # ===== i3 Emacs =====
+  emacs-dired = pkgs.writeShellScriptBin "emacs-dired" ''
+    ${emacs-gui-i3}/bin/emacs-gui-i3
+    exec ${config.myModules.emacs.package}/bin/emacsclient -n "''${1:-$PWD}"
+  '';
+
+  emacs-gui-i3 = pkgs.writeShellScriptBin "emacs-gui-i3" ''
+    id=$(${pkgs.i3}/bin/i3-msg -t get_tree \
+      | ${pkgs.jq}/bin/jq -r 'first(
+          recurse(.nodes[]?, .floating_nodes[]?)
+          | select(.window_properties.class == "Emacs"
+                   and .name != "emacs-run-launcher")
+          | .id
+        ) // empty')
+
+    if [ -n "$id" ]; then
+      exec ${pkgs.i3}/bin/i3-msg "[con_id=$id] focus"
     else
       exec ${emacs}/bin/emacsclient -c -n -a ""
     fi
@@ -92,6 +115,8 @@ in
     # ===== Emacs =====
     nkt
     emacs-gui
+    emacs-gui-i3
+    emacs-dired
 
     (writeShellScriptBin "doom-terminal" ''
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""

@@ -29,5 +29,6 @@
     autorandr
     tldr
     arandr
+    xwininfo
   ];
 }

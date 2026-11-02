@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/nix-server";
@@ -15,4 +15,6 @@ in
     ../picom.nix
     ./qtile-autostart.nix
   ];
+
+  myModules.emacs.sessions.qtile = pkgs.emacs-gtk;
 }

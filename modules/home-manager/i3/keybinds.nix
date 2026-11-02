@@ -7,12 +7,13 @@
 
 let
   mod = "Mod4";
-  ctrl = "Control";
+  alt = "Mod1";
   xdotool = "${pkgs.xdotool}/bin/xdotool";
   kitty = "${pkgs.kitty}/bin/kitty";
   dmenu = "${pkgs.dmenu}/bin/dmenu_run";
   # emacsclient = "${pkgs.emacs-gtk}/bin/emacsclient";
-  emacsclient = "${config.myModules.emacs.package}/bin/emacsclient";
+  # emacsclient = "${config.myModules.emacs.package}/bin/emacsclient";
+  emacseverywhere = "${config.programs.emacs.package}";
 in
 
 {
@@ -30,7 +31,10 @@ in
         # ===== APPLICATIONS =====
         "${mod}+Return" = "exec ${kitty}";
         "${mod}+d" = "exec ${dmenu}";
-        "${mod}+e" = "exec ${emacsclient} -c";
+        "${mod}+e" = "exec emacs-gui-i3";
+        "${mod}+Shift+e" = "exec ${emacseverywhere}/bin/emacsclient --eval '(emacs-everywhere)'";
+        # "${mod}+y" = "exec ${emacsclient} -c .";
+        "${mod}+y" = "exec emacs-dired";
 
         # NOTE: Check modules/scripts/x11-powermenu.nix
         "${mod}+x" = "exec x-powermenu";
@@ -118,7 +122,7 @@ in
         # NOTE: Check modules/scripts/x11-screenshot.nix
         "Print" = "exec x-screenshot DVI";
         "Shift+Print" = "exec x-screenshot HDMI";
-        "Alt+Print" = "exec x-screenshot DP";
+        "${alt}+Print" = "exec x-screenshot DP";
         "Control+Print" = "exec x-screenshot BOTH";
 
         # Resize mode trigger
@@ -126,22 +130,22 @@ in
 
         # ===== MOUSE EMULATION =====
         # Movement (H J K L)
-        "${mod}+${ctrl}+h" = "exec ${xdotool} mousemove_relative -- -20 0";
-        "${mod}+${ctrl}+j" = "exec ${xdotool} mousemove_relative -- 0 20";
-        "${mod}+${ctrl}+k" = "exec ${xdotool} mousemove_relative -- 0 -20";
-        "${mod}+${ctrl}+l" = "exec ${xdotool} mousemove_relative -- 20 0";
+        "${mod}+${alt}+h" = "exec ${xdotool} mousemove_relative -- -20 0";
+        "${mod}+${alt}+j" = "exec ${xdotool} mousemove_relative -- 0 20";
+        "${mod}+${alt}+k" = "exec ${xdotool} mousemove_relative -- 0 -20";
+        "${mod}+${alt}+l" = "exec ${xdotool} mousemove_relative -- 20 0";
 
         # Clicks
-        "${mod}+${ctrl}+comma" = "exec ${xdotool} click --clearmodifiers 1";
-        "${mod}+${ctrl}+period" = "exec ${xdotool} click --clearmodifiers 3";
-        "${mod}+${ctrl}+y" = "exec ${xdotool} click --clearmodifiers 4"; # Scroll Wheel UP
-        "${mod}+${ctrl}+p" = "exec ${xdotool} click --clearmodifiers 5"; # Scroll Wheel DOWN
+        "${mod}+${alt}+comma" = "exec ${xdotool} click --clearmodifiers 1";
+        "${mod}+${alt}+period" = "exec ${xdotool} click --clearmodifiers 3";
+        "${mod}+${alt}+y" = "exec ${xdotool} click --clearmodifiers 4"; # Scroll Wheel UP
+        "${mod}+${alt}+p" = "exec ${xdotool} click --clearmodifiers 5"; # Scroll Wheel DOWN
 
         # Diagonal Movement
-        "${mod}+${ctrl}+u" = "exec ${xdotool} mousemove_relative -- -40 -40";
-        "${mod}+${ctrl}+i" = "exec ${xdotool} mousemove_relative -- 40 -40";
-        "${mod}+${ctrl}+n" = "exec ${xdotool} mousemove_relative -- -40 40";
-        "${mod}+${ctrl}+m" = "exec ${xdotool} mousemove_relative -- 40 40";
+        "${mod}+${alt}+u" = "exec ${xdotool} mousemove_relative -- -40 -40";
+        "${mod}+${alt}+i" = "exec ${xdotool} mousemove_relative -- 40 -40";
+        "${mod}+${alt}+n" = "exec ${xdotool} mousemove_relative -- -40 40";
+        "${mod}+${alt}+m" = "exec ${xdotool} mousemove_relative -- 40 40";
 
       };
 
