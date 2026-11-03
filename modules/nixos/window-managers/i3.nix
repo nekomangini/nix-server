@@ -25,5 +25,6 @@
   # Screen locker PAM services
   security.pam.services = {
     i3lock-color.enable = true;
+    sddm.kwallet.enable = true;
   };
 }

@@ -65,13 +65,13 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  home.sessionVariables = {
-    # EDITOR = "${pkgs.helix}/bin/hx";
-    # VISUAL = "${pkgs.helix}/bin/hx";
-    # NOTE: hint Electron apps to use wayland
-    QT_QPA_PLATFORM = "wayland";
-    NIXOS_OZONE_WL = "1";
-  };
+  # home.sessionVariables = {
+  #   # EDITOR = "${pkgs.helix}/bin/hx";
+  #   # VISUAL = "${pkgs.helix}/bin/hx";
+  #   # NOTE: hint Electron apps to use wayland
+  #   # QT_QPA_PLATFORM = "wayland";
+  #   # NIXOS_OZONE_WL = "1";
+  # };
 
   # NOTE Only add this if you ever need pure X11 emacs:
   # myModules.emacs.package = pkgs.emacs-gtk;

@@ -789,3 +789,8 @@ binds {
     Mod+Alt+Comma  hotkey-overlay-title="ydotool: left click"  { spawn-sh "sleep 0.7 && ydotool click 0xC0"; }
     Mod+Alt+Period hotkey-overlay-title="ydotool: right click" { spawn-sh "ydotool click 0xC1"; }
 }
+
+environment {
+    QT_QPA_PLATFORM "wayland"
+    NIXOS_OZONE_WL "1"
+}

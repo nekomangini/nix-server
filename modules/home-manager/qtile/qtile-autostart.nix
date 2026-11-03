@@ -9,10 +9,7 @@ let
       picom
       dunst
       kitty
-      planify
-      kdePackages.dolphin
       kdePackages.polkit-kde-agent-1
-      vivaldi
     ];
     text = ''
       # NOTE: 3 MONITORS SETUP
@@ -23,7 +20,7 @@ let
 
       # Wallpapers
       feh --bg-fill ${wallpapers}/cars_034.png \
-                    ${wallpapers}/space_009.jpg \
+                    ${wallpapers}/space_009_h.jpg \
                     ${wallpapers}/cars_036.jpg &
 
       # Compositor and notifications
@@ -34,7 +31,7 @@ let
       # Staggered apps
       # (sleep 3 && io.github.alainm23.planify) &
       # (sleep 5 && dolphin) &
-      (sleep 7 && vivaldi) &
+      # (sleep 7 && vivaldi) &
     '';
   };
 in

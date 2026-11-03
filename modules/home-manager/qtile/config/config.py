@@ -167,7 +167,7 @@ keys = [
     # ── SCRIPTS  ──────────────────
     Key(
         [mod],
-        "p",
+        "x",
         lazy.spawn("x-powermenu"),
         desc="Power menu",
     ),
@@ -202,21 +202,21 @@ keys = [
         desc="Search the Web",
     ),
     # ── MOUSE EMULATION  ──────────────────
-    Key([mod, "control"], "h", lazy.spawn("xdotool mousemove_relative -- -20 0")),
-    Key([mod, "control"], "j", lazy.spawn("xdotool mousemove_relative -- 0 20")),
-    Key([mod, "control"], "k", lazy.spawn("xdotool mousemove_relative -- 0 -20")),
-    Key([mod, "control"], "l", lazy.spawn("xdotool mousemove_relative -- 20 0")),
+    Key([mod, "mod1"], "h", lazy.spawn("xdotool mousemove_relative -- -20 0")),
+    Key([mod, "mod1"], "j", lazy.spawn("xdotool mousemove_relative -- 0 20")),
+    Key([mod, "mod1"], "k", lazy.spawn("xdotool mousemove_relative -- 0 -20")),
+    Key([mod, "mod1"], "l", lazy.spawn("xdotool mousemove_relative -- 20 0")),
     # ── Diagonal movements  ──────────────────
-    Key([mod, "control"], "u", lazy.spawn("xdotool mousemove_relative -- -40 -40")),
-    Key([mod, "control"], "i", lazy.spawn("xdotool mousemove_relative -- 40 -40")),
-    Key([mod, "control"], "n", lazy.spawn("xdotool mousemove_relative -- -40 40")),
-    Key([mod, "control"], "m", lazy.spawn("xdotool mousemove_relative -- 40 40")),
-    Key([mod, "control"], "comma", lazy.spawn("xdotool click 1")),
-    Key([mod, "control"], "period", lazy.spawn("xdotool click 3")),
+    Key([mod, "mod1"], "u", lazy.spawn("xdotool mousemove_relative -- -40 -40")),
+    Key([mod, "mod1"], "i", lazy.spawn("xdotool mousemove_relative -- 40 -40")),
+    Key([mod, "mod1"], "n", lazy.spawn("xdotool mousemove_relative -- -40 40")),
+    Key([mod, "mod1"], "m", lazy.spawn("xdotool mousemove_relative -- 40 40")),
+    Key([mod, "mod1"], "comma", lazy.spawn("xdotool click 1")),
+    Key([mod, "mod1"], "period", lazy.spawn("xdotool click 3")),
     # ── Scroll Wheel UP ──────────────────────────────────────────
-    Key([mod, "control"], "y", lazy.spawn("xdotool click --clearmodifiers 4")),
+    Key([mod, "mod1"], "y", lazy.spawn("xdotool click --clearmodifiers 4")),
     # ── Scroll Wheel DOWN ──────────────────────────────────────────
-    Key([mod, "control"], "p", lazy.spawn("xdotool click --clearmodifiers 5")),
+    Key([mod, "mod1"], "p", lazy.spawn("xdotool click --clearmodifiers 5")),
     # ── MULTI MONITOR SETUP + MONITOR NAVIGATION  ──────────────────
     Key([mod], "comma", lazy.to_screen(2), desc="Focus DP-1"),
     Key([mod], "period", lazy.to_screen(1), desc="Focus HDMI-0"),
@@ -283,7 +283,7 @@ layouts = [
 # ── GROUPS  ──────────────────
 # FIX: Monitor arrangement
 groups_names = [
-    # ── Monitor 0 (DP-1 / 32"): 1 ──────────────────
+    # ── Monitor (DP-1 / 32"): 1 ──────────────────
     (
         "1",
         {
@@ -295,44 +295,44 @@ groups_names = [
                 Match(wm_class="helium"),
                 Match(wm_class="gwenview"),
                 Match(wm_class="Zathura"),
-                Match(wm_class="Godot"),
             ],
         },
     ),
-    # ── Monitor 1 (DVI-D-0 / 22" horizontal): 2 ──────────────────
+    # ── Monitor (HDMI-0 / 22" vertical): 3 ──────────────────
     (
         "2",
         {
             "label": "2",
             "layout": "max",
+            "screen_affinity": 1,  # HDMI-0 is screen 1
+            "matches": [
+                Match(wm_class="dev.zed.Zed"),
+                Match(wm_class="jetbrains-studio"),
+                Match(wm_class="org.kde.okular"),
+                Match(wm_class="Alacritty"),
+                Match(wm_class="Emacs"),
+            ],
+        },
+    ),
+    # ── Monitor (DVI-D-0 / 22" horizontal): 2 ──────────────────
+    (
+        "3",
+        {
+            "label": "3",
+            "layout": "max",
             "screen_affinity": 0,  # DVI-D-0 is screen 0
             "matches": [
-                Match(wm_class="Emacs"),
                 Match(wm_class="dolphin"),
                 Match(wm_class="io.github.alainm23.planify"),
-                Match(wm_class="Joplin"),
+                Match(wm_class="joplin-app-desktop"),
                 Match(wm_class="obsidian"),
                 Match(wm_class="krita"),
                 Match(wm_class="kdeconnect-app"),
                 Match(wm_class="PixiEditor.Desktop"),
                 Match(wm_class="vivaldi-stable"),
                 Match(wm_class="brave-browser"),
-                Match(wm_class="Blender"),
-            ],
-        },
-    ),
-    # ── Monitor 2 (HDMI-0 / 22" vertical): 3 ──────────────────
-    (
-        "3",
-        {
-            "label": "3",
-            "layout": "max",
-            "screen_affinity": 1,  # HDMI-0 is screen 1
-            "matches": [
-                Match(wm_class="Logseq"),
-                Match(wm_class="dev.zed.Zed"),
-                Match(wm_class="jetbrains-studio"),
-                Match(wm_class="org.kde.okular"),
+                Match(wm_class="(Unsaved) - Blender 5.1.1"),
+                Match(wm_class="Godot"),
             ],
         },
     ),
