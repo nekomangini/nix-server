@@ -81,8 +81,13 @@
     #   command = "sleep 5 && exec ${pkgs.kdePackages.dolphin}/bin/dolphin";
     #   notification = false;
     # }
+    # {
+    #   command = "sleep 7 && exec ${pkgs.brave}/bin/brave";
+    #   notification = false;
+    # }
     {
-      command = "sleep 7 && exec ${pkgs.brave}/bin/brave";
+      command = "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init";
+      always = false;
       notification = false;
     }
   ];

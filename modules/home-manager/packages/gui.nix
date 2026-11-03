@@ -8,7 +8,9 @@
     planify
     obsidian
     joplin-desktop
-    brave
-    vivaldi
+    # brave
+    (pkgs.brave.override { commandLineArgs = "--password-store=kwallet6"; })
+    # vivaldi
+    (pkgs.vivaldi.override { commandLineArgs = "--password-store=kwallet6"; })
   ];
 }
