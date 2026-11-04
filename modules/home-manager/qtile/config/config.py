@@ -17,7 +17,7 @@ from libqtile.lazy import lazy
 
 mod = "mod4"
 terminal = "kitty"
-doom = "emacsclient -c"
+doom = "emacs-gui-x11"
 
 # ──  Theme  ──────────────────
 colors = {
@@ -295,6 +295,7 @@ groups_names = [
                 Match(wm_class="helium"),
                 Match(wm_class="gwenview"),
                 Match(wm_class="Zathura"),
+                Match(wm_class="brave-browser"),
             ],
         },
     ),
@@ -310,7 +311,7 @@ groups_names = [
                 Match(wm_class="jetbrains-studio"),
                 Match(wm_class="org.kde.okular"),
                 Match(wm_class="Alacritty"),
-                Match(wm_class="Emacs"),
+                Match(wm_class="vivaldi-stable"),
             ],
         },
     ),
@@ -329,10 +330,9 @@ groups_names = [
                 Match(wm_class="krita"),
                 Match(wm_class="kdeconnect-app"),
                 Match(wm_class="PixiEditor.Desktop"),
-                Match(wm_class="vivaldi-stable"),
-                Match(wm_class="brave-browser"),
                 Match(wm_class="(Unsaved) - Blender 5.1.1"),
                 Match(wm_class="Godot"),
+                Match(wm_class="Emacs"),
             ],
         },
     ),

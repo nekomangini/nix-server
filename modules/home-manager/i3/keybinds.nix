@@ -31,7 +31,7 @@ in
         # ===== APPLICATIONS =====
         "${mod}+Return" = "exec ${kitty}";
         "${mod}+d" = "exec ${dmenu}";
-        "${mod}+e" = "exec emacs-gui-i3";
+        "${mod}+e" = "exec emacs-gui-x11";
         "${mod}+Shift+e" = "exec ${emacseverywhere}/bin/emacsclient --eval '(emacs-everywhere)'";
         # "${mod}+y" = "exec ${emacsclient} -c .";
         "${mod}+y" = "exec emacs-dired";

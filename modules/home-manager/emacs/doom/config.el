@@ -455,7 +455,7 @@
             (lambda ()
               (let* ((year (format-time-string "%Y"))
                      (date (format-time-string "%Y-%m-%d")))
-                (format "/home/nekomangininotes/journal/profit/%s/%s.org" year date)))
+                (format "/home/nekomangini/notes/journal/profit/%s/%s.org" year date)))
             "Notes")
            "* %?\n%U\n"
            :empty-lines 1)
