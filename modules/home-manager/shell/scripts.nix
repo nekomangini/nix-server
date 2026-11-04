@@ -62,25 +62,30 @@ let
   '';
 
   # ===== i3 Emacs =====
-  emacs-dired = pkgs.writeShellScriptBin "emacs-dired" ''
-    ${emacs-gui-i3}/bin/emacs-gui-i3
-    exec ${config.myModules.emacs.package}/bin/emacsclient -n "''${1:-$PWD}"
+  # ===== X11 Emacs (i3 and qtile) =====
+  # Emacs focuses its own GUI frame (it sends _NET_ACTIVE_WINDOW), so no WM-specific
+  # window lookup is needed. If there is no GUI frame (or no daemon), create one.
+  emacs-gui-x11 = pkgs.writeShellScriptBin "emacs-gui-x11" ''
+    ec=${emacs}/bin/emacsclient
+
+    found=$($ec -e '(let ((f (seq-find
+                              (lambda (fr)
+                                (and (display-graphic-p fr)
+                                     (not (equal (frame-parameter fr (quote name))
+                                                 "emacs-run-launcher"))))
+                              (frame-list))))
+                      (when f
+                        (select-frame-set-input-focus f)
+                        "yes"))' 2>/dev/null)
+
+    if [ "$found" != '"yes"' ]; then
+      exec $ec -c -n -a ""
+    fi
   '';
 
-  emacs-gui-i3 = pkgs.writeShellScriptBin "emacs-gui-i3" ''
-    id=$(${pkgs.i3}/bin/i3-msg -t get_tree \
-      | ${pkgs.jq}/bin/jq -r 'first(
-          recurse(.nodes[]?, .floating_nodes[]?)
-          | select(.window_properties.class == "Emacs"
-                   and .name != "emacs-run-launcher")
-          | .id
-        ) // empty')
-
-    if [ -n "$id" ]; then
-      exec ${pkgs.i3}/bin/i3-msg "[con_id=$id] focus"
-    else
-      exec ${emacs}/bin/emacsclient -c -n -a ""
-    fi
+  emacs-dired = pkgs.writeShellScriptBin "emacs-dired" ''
+    ${emacs-gui-x11}/bin/emacs-gui-x11
+    exec ${emacs}/bin/emacsclient -n "''${1:-$PWD}"
   '';
 
   # ===== KITTY =====
@@ -115,7 +120,7 @@ in
     # ===== Emacs =====
     nkt
     emacs-gui
-    emacs-gui-i3
+    emacs-gui-x11
     emacs-dired
 
     (writeShellScriptBin "doom-terminal" ''
