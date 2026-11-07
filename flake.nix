@@ -7,6 +7,9 @@
     # Agenix
     agenix.url = "github:ryantm/agenix";
 
+    # noctalia
+    noctalia.url = "github:noctalia-dev/noctalia";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +30,7 @@
       nixosConfigurations = {
         # desktop
         sylphiette = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
           modules = [
             # ./machines/sylphiette/configuration.nix
             ./machines/sylphiette

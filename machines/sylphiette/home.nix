@@ -28,7 +28,8 @@
     ../../modules/home-manager/hyprland
     ../../modules/home-manager/niri
 
-    ../../modules/home-manager/hyprpaper.nix
+    ../../modules/home-manager/noctalia
+    # ../../modules/home-manager/hyprpaper.nix
     ../../modules/home-manager/kanshi
     ../../modules/home-manager/waybar
     ../../modules/home-manager/foot

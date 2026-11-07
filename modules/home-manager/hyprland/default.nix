@@ -1,18 +1,20 @@
-{ ... }:
+{ config, lib, ... }:
+
+let
+  hyprDir = "${config.home.homeDirectory}/nix-server/modules/home-manager/hyprland/config";
+  luaFiles = lib.filter (lib.hasSuffix ".lua") (builtins.attrNames (builtins.readDir ./config));
+in
 
 {
-  imports = [
-    ./environment.nix
-    ./settings.nix
-    ./autostart.nix
-    ./keybinds.nix
-    ./rules.nix
-    ../shell/scripts.nix
-    ./group.nix
-  ];
+  imports = [ ../shell/scripts.nix ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  xdg.configFile = lib.listToAttrs (
+    map (f: {
+      name = "hypr/${f}";
+      value = {
+        source = config.lib.file.mkOutOfStoreSymlink "${hyprDir}/${f}";
+        force = true;
+      };
+    }) luaFiles
+  );
 }

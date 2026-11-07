@@ -61,6 +61,42 @@ let
     fi
   '';
 
+  emacs-dired-wayland = pkgs.writeShellScriptBin "emacs-dired-wayland" ''
+    dir="''${1:-$PWD}"
+    focused=0
+
+    if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+      addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
+        | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
+      if [ -n "$addr" ]; then
+        ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })" >/dev/null && focused=1
+      fi
+    elif [ -n "''${NIRI_SOCKET:-}" ]; then
+      id=$(niri msg --json windows \
+        | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
+      if [ -n "$id" ]; then
+        niri msg action focus-window --id "$id" && focused=1
+      fi
+    fi
+
+    if [ "$focused" = 1 ]; then
+      exec ${emacs}/bin/emacsclient -n "$dir"
+    else
+      exec ${emacs}/bin/emacsclient -c -n -a "" "$dir"
+    fi
+  '';
+
+  emacs-gui-hyprland = pkgs.writeShellScriptBin "emacs-gui-hyprland" ''
+    addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
+      | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
+
+    if [ -n "$addr" ]; then
+      exec ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })"
+    else
+      exec ${emacs}/bin/emacsclient -c -n -a ""
+    fi
+  '';
+
   # ===== i3 Emacs =====
   # ===== X11 Emacs (i3 and qtile) =====
   # Emacs focuses its own GUI frame (it sends _NET_ACTIVE_WINDOW), so no WM-specific
@@ -120,8 +156,10 @@ in
     # ===== Emacs =====
     nkt
     emacs-gui
+    emacs-gui-hyprland
     emacs-gui-x11
     emacs-dired
+    emacs-dired-wayland
 
     (writeShellScriptBin "doom-terminal" ''
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""
