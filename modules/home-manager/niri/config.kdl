@@ -508,6 +508,7 @@ binds {
     Mod+Shift+E { spawn "doom-foot-terminal"; }
     // Mod+E { spawn "emacsclient" "-c" "-a" ""; }
     Mod+E  hotkey-overlay-title="Spawn or Focus to an Emacs GUI" { spawn "emacs-gui"; }
+    Mod+Y { spawn "emacs-dired-wayland"; }
     // Mod+Y { spawn "emacsclient" "-c" "-a" "" "-e" "(dirvish)"; }
     // Mod+Y { spawn "emacsclient" "-e" "(emacs-run-launcher)";}
     // TODO:
