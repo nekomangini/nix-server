@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("YDOTOOL_SOCKET", "/tmp/ydotools")

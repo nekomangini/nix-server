@@ -17,6 +17,7 @@
     delta
     xclip
     wl-clipboard
+    wtype
     jq
     poppler
     resvg

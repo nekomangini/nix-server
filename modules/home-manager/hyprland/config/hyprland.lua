@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 require("env")
 require("settings")
 require("autostart")
