@@ -48,6 +48,13 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	match = { class = "org.kde.gwenview" },
+	no_blur = false,
+	opaque = "1",
+	workspace = 2,
+})
+
+hl.window_rule({
 	match = { class = "jetbrains-studio" },
 	no_blur = false,
 	opaque = "1",
