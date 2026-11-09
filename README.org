@@ -55,12 +55,15 @@ My personal Nix configuration: a NixOS desktop and home lab, plus a laptop runni
 
 Multi-compositor setup, switched per-session depending on what I'm feeling:
 
-- *i3* — single monitor (wip)
+- *i3* — X11 window manager; uses autorandr for dynamic output management
+- *Qtile* — alternative X11 window manager
 - *Niri* — main compositor (dual/triple monitor); uses Kanshi for dynamic output management instead of inline =output= configurations in =config.kdl=
-- *Qtile* — triple monitor (wip)
-- *Hyprland* — currently broken; planning to migrate from Hyprlang to Lua config
+- *Hyprland* — alternative compositor, integrated with the Noctalia Shell
 
-Shared across all of them: Waybar/panel, Fuzzel/Rofi launchers, Dunst notifications, Kitty (with a custom theme), Fish shell, Helix as the primary editor with a Doom Emacs daemon on standby, and tmux session management driven by [[https://raku.org][Raku]] scripts.
+Shared stack across all compositors:
+- *UI & Terminal* — Waybar/panel, Fuzzel/Rofi launchers, Dunst notifications, Kitty/Alacritty
+- *Shell & Multiplexer* — Fish shell, tmux sessions driven by [[https://raku.org][Raku]] scripts + Zellij
+- *Editors* — Doom Emacs as the primary environment; Helix as a lightweight fallback for terminal-only tasks or when Emacs is unavailable
 
 Notable fixes documented in-repo:
 
@@ -148,7 +151,10 @@ Emacs itself is installed with pacman. This repo only provides the Doom config a
 
 ** Screenshots
 
-- [[file:./assets/screenshot-01.png][screenshot]]
+- [[file:./assets/screenshot-niri.png][niri]]
+- [[file:./assets/screenshot-hyprland.png][hyprland]]
+- [[file:./assets/screenshot-i3.png][i3]]
+- [[file:./assets/screenshot-qtile.png][qtile]]
 
 -----
 
