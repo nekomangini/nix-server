@@ -31,6 +31,7 @@
 - [[#caldav-calendar][Caldav Calendar]]
 - [[#app-launcher][App Launcher]]
 - [[#encryption][Encryption]]
+- [[#emacs-everywhere][Emacs Everywhere]]
 - [[#notes][Notes]]
 
 * Initial Setup
@@ -77,32 +78,33 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
-;; hyprland
-;; (setq doom-theme 'doom-acario-dark)
-;; (setq doom-theme 'ef-deuteranopia-dark)
-;; (setq doom-theme 'ef-duo-dark)
-;; (setq doom-theme 'ef-maris-dark)
-;; (setq doom-theme 'doom-ayu-dark)
-;; Green
-;; (setq doom-theme 'ef-elea-dark)
-;; (setq doom-theme 'ef-bio)
-;; qtile
-;; (setq doom-theme 'ef-bio)
-;; (setq doom-theme 'ef-elea-dark)
-;; (setq doom-theme 'doom-gruvbox)
+
+;; neon
+;; (setq doom-theme 'doom-outrun-electric)
 ;; (setq doom-theme 'doom-shades-of-purple)
 ;; (setq doom-theme 'doom-challenger-deep)
-;; (setq doom-theme 'doom-tokyo-night)
-;; (setq doom-theme 'doom-zenburn)
-;; niri
-;; (setq doom-theme 'doom-solarized-dark-high-contrast)
-;; (setq doom-theme 'doom-solarized-dark)
-;; (setq doom-theme 'doom-oksolar-dark)
-;; (setq doom-theme 'doom-moonlight)
+
+;; ef theme
+;; (setq doom-theme 'ef-duo-dark)
 ;; (setq doom-theme 'ef-maris-dark)
 ;; (setq doom-theme 'ef-symbiosis)
+;; (setq doom-theme 'ef-deuteranopia-dark)
+;; (setq doom-theme 'ef-bio)
+;; (setq doom-theme 'ef-atlantis)
+;; (setq doom-theme 'ef-fig)
+(setq doom-theme 'ef-cherie)
+
+;; Doom
+;; (setq doom-theme 'doom-acario-dark)
+;; (setq doom-theme 'doom-ayu-dark)
+;; (setq doom-theme 'doom-gruvbox)
+;; (setq doom-theme 'doom-zenburn)
+;; (setq doom-theme 'doom-solarized-dark-high-contrast)
+;; (setq doom-theme 'doom-solarized-dark)
+;; (setq doom-theme 'doom-tokyo-night)
+;; (setq doom-theme 'doom-oksolar-dark)
+;; (setq doom-theme 'doom-moonlight)
 ;; (setq doom-theme 'modus-vivendi)
-(setq doom-theme 'ef-bio)
 #+end_src
 
 * Transparency
@@ -841,6 +843,56 @@ Using tty instead of this code. Check the init.el
 #+begin_src elisp
 ;; Make Emacs ask in its own minibuffer
 (setq epg-pinentry-mode 'loopback)
+#+end_src
+* Emacs Everywhere
+The Code is from this blog post: [[https://thanosapollo.org/posts/use-emacs-everywhere/][thanosapollo.org/posts/use-emacs-everywhere]]
+#+begin_src emacs-lisp
+(defun thanos/wtype-text (text)
+  "Process TEXT for wtype, handling newlines properly."
+  (let* ((has-final-newline (string-match-p "\n$" text))
+         (lines (split-string text "\n"))
+         (last-idx (1- (length lines))))
+    (string-join
+     (cl-loop for line in lines
+              for i from 0
+              collect (cond
+                       ;; Last line without final newline
+                       ((and (= i last-idx) (not has-final-newline))
+                        (format "wtype -s 350 \"%s\""
+                                (replace-regexp-in-string "\"" "\\\\\"" line)))
+                       ;; Any other line
+                       (t
+                        (format "wtype -s 350 \"%s\" && wtype -k Return"
+                                (replace-regexp-in-string "\"" "\\\\\"" line)))))
+     " && ")))
+
+(defun thanos/type ()
+  "Launch a temporary frame with a clean buffer for typing."
+  (interactive)
+  (let ((frame (make-frame '((name . "emacs-float")
+                             (fullscreen . 0)
+                             (undecorated . t)
+                             (width . 90)
+                             (height . 25))))
+        (buf (get-buffer-create "emacs-float")))
+    (select-frame frame)
+    (switch-to-buffer buf)
+    (erase-buffer)
+    (org-mode)
+    (setq-local header-line-format
+                (format " %s to insert text or %s to cancel."
+                        (propertize "C-c C-c" 'face 'help-key-binding)
+            (propertize "C-c C-k" 'face 'help-key-binding)))
+    (local-set-key (kbd "C-c C-k")
+           (lambda () (interactive)
+             (kill-new (buffer-string))
+             (delete-frame)))
+    (local-set-key (kbd "C-c C-c")
+           (lambda () (interactive)
+             (start-process-shell-command
+              "wtype" nil
+              (thanos/wtype-text (buffer-string)))
+             (delete-frame)))))
 #+end_src
 * Notes
 #+begin_src elisp

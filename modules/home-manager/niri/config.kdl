@@ -506,6 +506,7 @@ binds {
 
     // TODO:
     Mod+Shift+E { spawn "doom-foot-terminal"; }
+    // Mod+Shift+E { spawn "emacsclient" "--eval" "(thanos/type)"; }
     // Mod+E { spawn "emacsclient" "-c" "-a" ""; }
     Mod+E  hotkey-overlay-title="Spawn or Focus to an Emacs GUI" { spawn "emacs-gui"; }
     Mod+Y { spawn "emacs-dired-wayland"; }

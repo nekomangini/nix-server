@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- monitors
 hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "0x0", scale = 1 })
 hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@60", position = "1920x0", scale = 1, transform = 3 })
@@ -115,9 +117,23 @@ hl.window_rule({
 	workspace = 9,
 })
 
+-- General rule for main Emacs instances
 hl.window_rule({
-	match = { class = "emacs" },
+	match = {
+		class = "^(emacs)$",
+		title = "^((?!emacs-float).)*$", -- Matches Emacs windows EXCEPT emacs-float
+	},
 	no_blur = false,
 	opacity = "0.82",
 	workspace = 10,
+})
+
+-- Dedicated rule for the floating scratchpad (forces it to float over the *current* active window)
+hl.window_rule({
+	match = {
+		class = "^(emacs)$",
+		title = "^(emacs-float)$",
+	},
+	float = true,
+	center = true,
 })

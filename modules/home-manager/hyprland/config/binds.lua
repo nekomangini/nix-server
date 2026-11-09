@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local mainMod = "SUPER"
 local ipc = "noctalia msg "
 local dirs = { h = "l", j = "d", k = "u", l = "r" }
@@ -9,7 +11,9 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("alacritty"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("emacs-gui-hyprland"))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("emacsclient --eval '(thanos/type)'"))
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd("emacs-dired-wayland"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("dev-workspace"))
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
@@ -20,12 +24,14 @@ for i = 1, 10 do
 	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Noctalia (from its docs)
+-- Noctalia
 hl.bind(mainMod .. "+D", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. "+S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
 hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
 hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher hold"))
 hl.bind("ALT + SHIFT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher hold reverse"))
+hl.bind("Print", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen pick"))
+hl.bind(mainMod .. "+ CTRL + L", hl.dsp.exec_cmd(ipc .. "session lock"))
 
 -- Media Controls
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"))
