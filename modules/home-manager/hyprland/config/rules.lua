@@ -1,23 +1,23 @@
 ---@diagnostic disable: undefined-global
 
--- monitors
+-- Monitors
 hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "0x0", scale = 1 })
 hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@60", position = "1920x0", scale = 1, transform = 3 })
 hl.monitor({ output = "DVI-D-1", mode = "1920x1080@60", position = "3000x0", scale = 1 })
 
--- monitor setup
-hl.workspace_rule({ workspace = "1", monitor = "HDMI-A-1", persistent = true })
-hl.workspace_rule({ workspace = "2", monitor = "HDMI-A-1", persistent = true })
-hl.workspace_rule({ workspace = "3", monitor = "HDMI-A-1", persistent = true })
-hl.workspace_rule({ workspace = "4", monitor = "DVI-D-1", persistent = true })
-hl.workspace_rule({ workspace = "5", monitor = "DVI-D-1", persistent = true })
-hl.workspace_rule({ workspace = "6", monitor = "HDMI-A-1", persistent = true })
-hl.workspace_rule({ workspace = "7", monitor = "DVI-D-1", persistent = true })
-hl.workspace_rule({ workspace = "8", monitor = "HDMI-A-1", persistent = true })
-hl.workspace_rule({ workspace = "9", monitor = "DVI-D-1", persistent = true })
-hl.workspace_rule({ workspace = "10", monitor = "DVI-D-1", persistent = true })
+-- Workspaces per monitor
+local monitor_workspaces = {
+	["HDMI-A-1"] = { 1, 2, 3, 4, 5 },
+	["DVI-D-1"] = { 6, 7, 8, 9, 10 },
+}
 
--- workspace rules
+for monitor, list in pairs(monitor_workspaces) do
+	for _, ws in ipairs(list) do
+		hl.workspace_rule({ workspace = tostring(ws), monitor = monitor, persistent = true })
+	end
+end
+
+-- Noctalia
 hl.window_rule({
 	match = { class = "dev.noctalia.Noctalia" },
 	float = true,
@@ -33,114 +33,40 @@ hl.layer_rule({
 	blur_popups = true,
 })
 
-hl.window_rule({
-	match = { class = "kitty" },
-	no_blur = false,
-	opacity = "0.82",
-	workspace = 1,
-})
+-- Opaque apps: { class, workspace }
+local opaque_apps = {
+	{ "org.kde.dolphin", 2 },
+	{ "org.kde.gwenview", 3 },
+	{ "jetbrains-studio", 4 },
+	{ "dev.zed.Zed", 4 },
+	{ "joplin-app-desktop", 5 },
+	{ "vivaldi-stable", 5 },
+	{ "krita", 6 },
+	{ "blender", 7 },
+	{ "PixiEditor.Desktop", 7 },
+	{ "brave-browser", 8 },
+	{ "Godot", 8 },
+}
 
-hl.window_rule({
-	match = { class = "org.kde.dolphin" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 2,
-})
+for _, app in ipairs(opaque_apps) do
+	hl.window_rule({ match = { class = app[1] }, opaque = true, workspace = tostring(app[2]) })
+end
 
-hl.window_rule({
-	match = { class = "org.kde.gwenview" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 2,
-})
+-- Transparent apps: { class, workspace }
+local transparent_apps = {
+	{ "^kitty$", 1 },
+	{ "^Alacritty$", 9 },
+	{ "^([Ee]macs)$", 10 },
+}
 
-hl.window_rule({
-	match = { class = "jetbrains-studio" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 3,
-})
+for _, app in ipairs(transparent_apps) do
+	hl.window_rule({ match = { class = app[1] }, opacity = "0.82", workspace = tostring(app[2]) })
+end
 
+-- Emacs floating scratchpad: must come AFTER the loop so it overrides workspace 10
 hl.window_rule({
-	match = { class = "dev.zed.Zed" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 3,
-})
-
-hl.window_rule({
-	match = { class = "brave-browser" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 4,
-})
-
-hl.window_rule({
-	match = { class = "Godot" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 5,
-})
-
-hl.window_rule({
-	match = { class = "joplin-app-desktop" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 6,
-})
-
-hl.window_rule({
-	match = { class = "krita" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 7,
-})
-
-hl.window_rule({
-	match = { class = "blender" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 7,
-})
-
-hl.window_rule({
-	match = { class = "PixiEditor.Desktop" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 7,
-})
-
-hl.window_rule({
-	match = { class = "vivaldi-stable" },
-	no_blur = false,
-	opaque = "1",
-	workspace = 8,
-})
-
-hl.window_rule({
-	match = { class = "Alacritty" },
-	no_blur = false,
-	opacity = "0.82",
-	workspace = 9,
-})
-
--- General rule for main Emacs instances
-hl.window_rule({
-	match = {
-		class = "^(emacs)$",
-		title = "^((?!emacs-float).)*$", -- Matches Emacs windows EXCEPT emacs-float
-	},
-	no_blur = false,
-	opacity = "0.82",
-	workspace = 10,
-})
-
--- Dedicated rule for the floating scratchpad (forces it to float over the *current* active window)
-hl.window_rule({
-	match = {
-		class = "^(emacs)$",
-		title = "^(emacs-float)$",
-	},
+	match = { class = "^([Ee]macs)$", title = "^(emacs-float)$" },
 	float = true,
 	center = true,
+	workspace = "unset",
 })
