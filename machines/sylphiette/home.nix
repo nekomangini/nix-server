@@ -3,18 +3,20 @@
 {
   imports = [
     ../../modules/home-manager/kitty
+    ../../modules/home-manager/alacritty
+    ../../modules/home-manager/foot
     ../../modules/home-manager/shell
     ../../modules/home-manager/helix
-    ../../modules/home-manager/emacs
     ../../modules/home-manager/neovim
-    ../../modules/home-manager/tmux.nix
     ../../modules/home-manager/vim.nix
     ../../modules/home-manager/kakoune.nix
+    ../../modules/home-manager/tmux.nix
+    ../../modules/home-manager/zellij
     ../../modules/home-manager/git.nix
     ../../modules/home-manager/yazi.nix
 
+    ../../modules/home-manager/emacs
     ../../modules/home-manager/gpg.nix
-    ../../modules/home-manager/autorandr
 
     ../../modules/home-manager/packages
     ../../modules/home-manager/android.nix
@@ -28,14 +30,11 @@
     ../../modules/home-manager/hyprland
     ../../modules/home-manager/niri
 
-    ../../modules/home-manager/noctalia
     # ../../modules/home-manager/hyprpaper.nix
+    ../../modules/home-manager/autorandr
+    ../../modules/home-manager/noctalia
     ../../modules/home-manager/kanshi
     ../../modules/home-manager/waybar
-    ../../modules/home-manager/foot
-    ../../modules/home-manager/zellij
-    ../../modules/home-manager/zellij
-    ../../modules/home-manager/alacritty
     ../../modules/home-manager/fuzzel.nix
     ../../modules/home-manager/hyprlock.nix
     ../../modules/home-manager/ydotool.nix
