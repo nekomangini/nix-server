@@ -5,7 +5,6 @@ let
   kitty = pkgs.kitty;
   tmux = pkgs.tmux;
   foot = pkgs.foot;
-  zellij = pkgs.zellij;
   htop = pkgs.htop;
   awww = pkgs.awww;
   fuzzel = pkgs.fuzzel;
@@ -137,12 +136,6 @@ let
 
     new_tab ssh
     launch ${tmux}/bin/tmux new-session -A -s ssh
-
-    new_tab zellij-work
-    launch ${zellij}/bin/zellij attach --create work
-
-    new_tab zellij-logs
-    launch ${zellij}/bin/zellij attach --create logs
 
     new_tab monitor
     launch ${htop}/bin/htop

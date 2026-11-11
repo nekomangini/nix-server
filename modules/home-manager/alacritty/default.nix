@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,5 +8,10 @@
 
   programs.alacritty = {
     enable = true;
+
+    settings.terminal.shell = {
+      program = "${pkgs.zellij}/bin/zellij";
+
+    };
   };
 }

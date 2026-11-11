@@ -9,7 +9,6 @@ let
     '';
   });
   pc-server = "192.168.1.200";
-  laptop-server = "192.168.1.9";
 in
 {
   services.homepage-dashboard = {
@@ -153,13 +152,6 @@ in
               description = "Bookmark Manager";
               href = "http://linkding.home";
               icon = "linkding.png";
-            };
-          }
-          {
-            "Radicale (Void)" = {
-              description = "CalDAV Server";
-              href = "http://${laptop-server}:5232";
-              icon = "radicale.png";
             };
           }
           {
