@@ -1,17 +1,20 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
     ./settings.nix
-    ./theme.nix
+    # ./theme.nix
   ];
 
   programs.alacritty = {
     enable = true;
 
-    settings.terminal.shell = {
-      program = "${pkgs.zellij}/bin/zellij";
+    settings = {
+      general.import = [ "${config.xdg.configHome}/alacritty/themes/noctalia.toml" ];
 
+      terminal.shell = {
+        program = "${pkgs.zellij}/bin/zellij";
+      };
     };
   };
 }

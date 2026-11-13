@@ -55,6 +55,9 @@
       "http://filebrowser.home" = {
         extraConfig = "reverse_proxy localhost:8085";
       };
+      "http://seanime.home" = {
+        extraConfig = "reverse_proxy localhost:43211";
+      };
     };
   };
 

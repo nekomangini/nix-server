@@ -17,6 +17,7 @@
     ./nextcloud
     ./netdata
     ./radicale
+    ./seanime
     ./syncthing
     ./uptime-kuma
     # ./vaultwarden

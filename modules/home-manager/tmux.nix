@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+
 {
   programs.tmux = {
     enable = true;
@@ -46,6 +47,10 @@
       set -ga terminal-overrides ",*256col*:Tc"
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -ga terminal-overrides ",xterm-kitty:Tc"
+
+      # Noctalia theme
+      set -g @noctalia_inactive_tabs_use_background off   # optional, from the README
+      source-file -q ${config.xdg.configHome}/tmux/themes/noctalia.conf
 
       # Show continuum status in tmux status bar
       set -g status-right 'Continuum: #{continuum_status}'
