@@ -2,7 +2,7 @@
 
 {
   programs.helix.settings = {
-    theme = "rose_pine";
+    theme = "noctalia";
 
     editor = {
       line-number = "relative";

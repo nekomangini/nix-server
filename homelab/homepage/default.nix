@@ -118,10 +118,19 @@ in
               };
             };
           }
+          {
+            "Seanime" = {
+              description = "Media Server for Anime & Manga";
+              href = "http://seanime.home";
+              # TODO: fix logo
+              icon = "seanime.png";
+            };
+          }
 
           {
             "Cloud" = [
               {
+                # TODO: Fix error
                 "Nextcloud" = {
                   href = "http://nextcloud.home";
                   description = "File sync and share";
