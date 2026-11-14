@@ -79,28 +79,30 @@ Everything runs on the desktop host, fronted by **Caddy** as a reverse proxy on 
 
 Backups are automated with systemd timers — Nextcloud has daily backups with 7-day retention.
 
-|--------------+------------------------------------------------------|
-| Service      | Purpose                                              |
-|--------------+------------------------------------------------------|
-| [[https://jellyfin.org][Jellyfin]]     | Media server (hardware transcoding via NVENC)        |
-| [[https://immich.app][Immich]]       | Photo/video backup [GPU-accelerated ML]              |
-| [[https://nextcloud.com][Nextcloud]]    | File sync and share [self-hosted]                    |
-| [[https://filebrowser.org][FileBrowser]]  | Web-based file manager                               |
-| [[https://www.navidrome.org][Navidrome]]    | Music streaming                                      |
-| [[https://www.kavitareader.com][Kavita]]       | Manga/book/comic library                             |
-| [[https://forgejo.org][Forgejo]]      | Git hosting — migration target from GitHub           |
-| [[https://github.com/dani-garcia/vaultwarden][Vaultwarden]]  | Password manager — planned, not yet deployed         |
-| [[https://adguard.com/en/adguard-home/overview.html][AdGuard Home]] | Network-wide DNS ad-blocking                         |
-| [[https://syncthing.net][Syncthing]]    | File sync across devices                             |
-| [[https://radicale.org][Radicale]]     | CalDAV/CardDAV server                                |
-| [[https://github.com/sissbruecker/linkding][Linkding]]     | Bookmark manager                                     |
-| [[https://js.wiki][Wiki.js]]      | Personal wiki                                        |
-| [[https://jotty.page][Jotty]]        | Notes                                                |
-| [[https://github.com/alexta69/metube][MeTube]]       | yt-dlp download frontend                             |
-| [[https://github.com/louislam/uptime-kuma][Uptime Kuma]]  | Uptime monitoring, with Discord notifications/alerts |
-| [[https://www.netdata.cloud][Netdata]]      | Real-time metrics, alerts to Discord                 |
-| [[https://gethomepage.dev][Homepage]]     | Dashboard for the whole stack                        |
-|--------------+------------------------------------------------------|
+|--------------+---------------------------------------------------------------------------------|
+| Service      | Purpose                                                                         |
+|--------------+---------------------------------------------------------------------------------|
+| [[https://jellyfin.org][Jellyfin]]     | Media server (hardware transcoding via NVENC)                                   |
+| [[https://immich.app][Immich]]       | Photo/video backup [GPU-accelerated ML]                                         |
+| [[https://nextcloud.com][Nextcloud]]    | File sync and share [self-hosted]                                               |
+| [[https://filebrowser.org][FileBrowser]]  | Web-based file manager                                                          |
+| [[https://www.navidrome.org][Navidrome]]    | Music streaming                                                                 |
+| [[https://www.kavitareader.com][Kavita]]       | Manga/book/comic library                                                        |
+| [[https://forgejo.org][Forgejo]]      | Git hosting — migration target from GitHub                                      |
+| [[https://github.com/dani-garcia/vaultwarden][Vaultwarden]]  | Password manager — planned, not yet deployed                                    |
+| [[https://adguard.com/en/adguard-home/overview.html][AdGuard Home]] | Network-wide DNS ad-blocking                                                    |
+| [[https://syncthing.net][Syncthing]]    | File sync across devices                                                        |
+| [[https://radicale.org][Radicale]]     | CalDAV/CardDAV server                                                           |
+| [[https://github.com/sissbruecker/linkding][Linkding]]     | Bookmark manager                                                                |
+| [[https://js.wiki][Wiki.js]]      | Personal wiki                                                                   |
+| [[https://jotty.page][Jotty]]        | Notes                                                                           |
+| [[https://github.com/alexta69/metube][MeTube]]       | yt-dlp download frontend                                                        |
+| [[https://github.com/louislam/uptime-kuma][Uptime Kuma]]  | Uptime monitoring, with Discord notifications/alerts                            |
+| [[https://www.netdata.cloud][Netdata]]      | Real-time metrics, alerts to Discord                                            |
+| [[https://gethomepage.dev][Homepage]]     | Dashboard for the whole stack                                                   |
+| [[https://github.com/5rahim/seanime][Seanime]]      | Open-source media server with web interface and desktop app for anime and manga |
+| [[https://www.qbittorrent.org][qBittorent]]   | Free, open-source, and ad-free BiTorrent client                                 |
+|--------------+---------------------------------------------------------------------------------|
 
 Each service lives in its own =homelab/<service>/default.nix= for easy enable/disable and review.
 

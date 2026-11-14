@@ -16,6 +16,7 @@
     ./navidrome
     ./nextcloud
     ./netdata
+    ./qbittorent
     ./radicale
     ./seanime
     ./syncthing
