@@ -35,17 +35,20 @@ hl.layer_rule({
 
 -- Opaque apps: { class, workspace }
 local opaque_apps = {
-	{ "org.kde.dolphin", 2 },
-	{ "org.kde.gwenview", 3 },
-	{ "jetbrains-studio", 4 },
-	{ "dev.zed.Zed", 4 },
-	{ "joplin-app-desktop", 5 },
+	{ "org.pwmt.zathura", 1 },
+	{ "org.kde.okular", 1 },
+	{ "joplin-app-desktop", 1 },
+	{ "jetbrains-studio", 1 },
+	{ "dev.zed.Zed", 1 },
+	{ "org.kde.gwenview", 2 },
+	{ "easytag", 2 },
+	{ "org.kde.dolphin", 3 },
 	{ "vivaldi-stable", 5 },
 	{ "krita", 6 },
 	{ "blender", 7 },
 	{ "PixiEditor.Desktop", 7 },
 	{ "brave-browser", 8 },
-	{ "Godot", 8 },
+	{ "org.qutebrowser.qutebrowser", 9 },
 }
 
 for _, app in ipairs(opaque_apps) do
@@ -54,8 +57,9 @@ end
 
 -- Transparent apps: { class, workspace }
 local transparent_apps = {
-	{ "^kitty$", 1 },
-	{ "^Alacritty$", 9 },
+	{ "foot", 4 },
+	{ "^kitty$", 4 },
+	{ "^Alacritty$", 8 },
 	{ "^([Ee]macs)$", 10 },
 }
 

@@ -144,7 +144,7 @@ Emacs itself is installed with pacman. This repo only provides the Doom config a
 
 ** TODOs
 
-- [ ] Migrate Hyprland configuration from Hyprlang to Lua
+- [X] Migrate Hyprland configuration from Hyprlang to Lua
 - [X] Enable GPU acceleration for machine learning in Immich
 - [X] Clean up and reorganize packages
 - [X] Migrate remaining GitHub repositories to Forgejo

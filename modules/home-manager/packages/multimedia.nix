@@ -9,6 +9,7 @@
     (blender.override { cudaSupport = true; })
     krita
     pixieditor
+    gimp
     kdePackages.gwenview
   ];
 }

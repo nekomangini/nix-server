@@ -125,14 +125,8 @@ let
 
   # ===== KITTY =====
   kittySession = pkgs.writeText "kitty-session.conf" ''
-    new_tab emacs
-    launch ${nkt}/bin/nkt
-
-    new_tab main
+    new_tab docs
     launch ${tmux}/bin/tmux new-session -A -s main
-
-    new_tab tmux-dotfiles
-    launch ${tmux}/bin/tmux new-session -A -s dotfiles
 
     new_tab ssh
     launch ${tmux}/bin/tmux new-session -A -s ssh
