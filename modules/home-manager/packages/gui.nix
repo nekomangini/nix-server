@@ -12,5 +12,6 @@
     (pkgs.brave.override { commandLineArgs = "--password-store=kwallet6"; })
     # vivaldi
     (pkgs.vivaldi.override { commandLineArgs = "--password-store=kwallet6"; })
+    qutebrowser
   ];
 }

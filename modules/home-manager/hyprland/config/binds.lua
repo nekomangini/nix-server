@@ -12,7 +12,7 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 
 -- Applications & Scripts
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("alacritty"))
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("dev-workspace"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("emacs-gui-hyprland"))
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("emacsclient --eval '(thanos/type)'"))
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd("emacs-dired-wayland"))
@@ -53,7 +53,7 @@ hl.bind(mainMod .. " + SHIFT + N", hl.dsp.window.move({ monitor = "r" }))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.move({ monitor = "l" }))
 hl.bind(mainMod .. " + I", hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mainMod .. " + O", hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + BACKSLASH", hl.dsp.focus({ workspace = "previou" }))
+hl.bind(mainMod .. " + BACKSLASH", hl.dsp.focus({ workspace = "previous" }))
 
 -- Audio Controls
 local locked = { locked = true }
