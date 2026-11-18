@@ -355,61 +355,73 @@ animations {
     // slowdown 3.0
 }
 
+// ─────────────────────────────────────────────────────────────
 // Workspace rules
-workspace "1" {
-    open-on-output "DVI-D-1"
-}
+//
+workspace "term"  { open-on-output "HDMI-A-1"; }
+workspace "files" { open-on-output "HDMI-A-1"; }
+workspace "read"  { open-on-output "HDMI-A-1"; }
+workspace "code"  { open-on-output "DVI-D-1"; }
+workspace "art"   { open-on-output "DVI-D-1"; }
+workspace "ide"   { open-on-output "DVI-D-1"; }
 
-workspace "terminal" {
-    open-on-output "HDMI-A-1"
-}
+// workspace "1" {
+//     open-on-output "DVI-D-1"
+// }
+//
+// workspace "terminal" {
+//     open-on-output "HDMI-A-1"
+// }
 
-workspace "emacs" {
-    open-on-output "HDMI-A-1"
-}
+// workspace "emacs" {
+//     open-on-output "DVI-D-1"
+// }
 
 
+// ─────────────────────────────────────────────────────────────
+// Window rules
+//
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
+// window-rule {
+//     // This regular expression is intentionally made as specific as possible,
+//     // since this is the default config, and we want no false positives.
+//     // You can get away with just app-id="wezterm" if you want.
+//     match app-id=r#"^org\.wezfurlong\.wezterm$"#
+//     default-column-width {}
+// }
 
 // Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-}
+// window-rule {
+//     // This app-id regular expression will work for both:
+//     // - host Firefox (app-id is "firefox")
+//     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+//     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+//     open-floating true
+// }
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-
-    block-out-from "screen-capture"
-
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
-}
+// /-window-rule {
+//     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+//     match app-id=r#"^org\.gnome\.World\.Secrets$"#
+//
+//     block-out-from "screen-capture"
+//
+//     // Use this instead if you want them visible on third-party screenshot tools.
+//     // block-out-from "screencast"
+// }
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
+// /-window-rule {
+//     geometry-corner-radius 12
+//     clip-to-geometry true
+// }
 
 window-rule {
     match app-id=r#"^brave-browser$"#
@@ -425,9 +437,34 @@ window-rule {
     draw-border-with-background false
     variable-refresh-rate false
     clip-to-geometry true
-    open-on-workspace "1"
+    open-on-workspace "term"
 }
 
+window-rule {
+    match app-id=r#"^kitty$"#
+    match app-id=r#"^dev-workspace-wayland"#
+    match app-id=r#"^footclient$"#
+    match app-id=r#"^foot$"#
+    match app-id=r#"^Alacritty$"#
+    open-fullscreen true
+    draw-border-with-background false
+    opacity 0.8
+    open-on-workspace "term"
+    background-effect {
+        xray true
+        blur true
+        noise 0.02
+        saturation 1.0
+    }
+}
+
+window-rule {
+    match app-id=r#"^org\.qutebrowser\.qutebrowser$"#
+    open-maximized true
+    open-focused true
+    draw-border-with-background false
+    open-on-workspace "code"
+}
 
 // blur effect only, no color tinting
 window-rule {
@@ -436,7 +473,7 @@ window-rule {
     open-focused true
     draw-border-with-background false
     opacity 0.8
-    open-on-workspace "emacs"
+    open-on-workspace "code"
     background-effect {
         xray true
         blur true
@@ -453,20 +490,29 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^kitty$"#
-    match app-id=r#"^footclient$"#
-    match app-id=r#"^foot$"#
-    match app-id=r#"^Alacritty$"#
-    open-fullscreen true
-    draw-border-with-background false
-    opacity 0.8
-    open-on-workspace "terminal"
-    background-effect {
-        xray true
-        blur true
-        noise 0.02
-        saturation 1.0
-    }
+    match app-id=r#"^org\.kde\.dolphin$"#
+    match app-id=r#"^org\.kde\.gwenview$"#
+    match app-id=r#"^easytag$"#
+    match app-id=r#"^joplin-app-desktop$"#
+    open-on-workspace "files"
+}
+window-rule {
+    match app-id=r#"^org\.pwmt\.zathura$"#
+    match app-id=r#"^org\.kde\.okular$"#
+    open-on-workspace "read"
+}
+window-rule {
+    match app-id=r#"^blender$"#
+    match app-id=r#"^krita$"#
+    match app-id=r#"^PixiEditor\.Desktop$"#
+    match app-id=r#"^gimp$"#
+    open-on-workspace "art"
+}
+window-rule {
+    match app-id=r#"^jetbrains-studio$"#
+    match app-id=r#"^dev\.zed\.Zed$"#
+    match app-id=r#"^Godot$"#
+    open-on-workspace "ide"
 }
 
 // Inactive dimming - exclude kitty and other terminals
@@ -492,23 +538,23 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="kitty: Launch dev-workspace" { spawn "dev-workspace"; }
+    Mod+T hotkey-overlay-title="kitty: Launch dev-workspace" { spawn "dev-workspace-wayland"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel"  { spawn "fuzzel"; }
     // NOTE: Removed, keybind use for mouse emulation, use Super+X(niri-powermenu script) instead
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
-    Mod+Shift+P hotkey-overlay-title="hyprlock: Lock the Screen" { spawn "hyprlock"; }
+    Mod+Shift+X hotkey-overlay-title="hyprlock: Lock the Screen" { spawn "hyprlock"; }
 
     // NOTE: Screen reader
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
-    // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
+    // NOTE: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
     // For example, this is a standard bind to toggle the screen reader (orca).
     // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
     // TODO:
-    Mod+Shift+E { spawn "doom-foot-terminal"; }
+    // Mod+Shift+E { spawn "doom-foot-terminal"; }
     // Mod+Shift+E { spawn "emacsclient" "--eval" "(thanos/type)"; }
     // Mod+E { spawn "emacsclient" "-c" "-a" ""; }
-    Mod+E  hotkey-overlay-title="Spawn or Focus to an Emacs GUI" { spawn "emacs-gui"; }
+    Mod+E  hotkey-overlay-title="Spawn or Focus to an Emacs GUI" { spawn "emacs-gui-wayland"; }
     Mod+Y { spawn "emacs-dired-wayland"; }
     // Mod+Y { spawn "emacsclient" "-c" "-a" "" "-e" "(dirvish)"; }
     // Mod+Y { spawn "emacsclient" "-e" "(emacs-run-launcher)";}
@@ -594,8 +640,8 @@ binds {
     Mod+N           { focus-monitor-right; }
     Mod+P           { focus-monitor-left;  }
 
-    Mod+Ctrl+N  { move-column-to-monitor-right; }
-    Mod+Ctrl+P  { move-column-to-monitor-left;  }
+    Mod+Shift+N  { move-column-to-monitor-right; }
+    Mod+Shift+P  { move-column-to-monitor-left;  }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }

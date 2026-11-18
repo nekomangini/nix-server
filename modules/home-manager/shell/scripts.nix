@@ -49,52 +49,79 @@ let
   '';
 
   # ===== Niri Emacs =====
-  emacs-gui = pkgs.writeShellScriptBin "emacs-gui" ''
-    id=$(niri msg --json windows \
-      | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
+  # emacs-gui = pkgs.writeShellScriptBin "emacs-gui" ''
+  #   id=$(niri msg --json windows \
+  #     | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
 
-    if [ -n "$id" ]; then
-      exec niri msg action focus-window --id "$id"
-    else
-      exec ${emacs}/bin/emacsclient -c -n -a ""
+  #   if [ -n "$id" ]; then
+  #     exec niri msg action focus-window --id "$id"
+  #   else
+  #     exec ${emacs}/bin/emacsclient -c -n -a ""
+  #   fi
+  # '';
+
+  # emacs-dired-wayland = pkgs.writeShellScriptBin "emacs-dired-wayland" ''
+  #   dir="''${1:-$PWD}"
+  #   focused=0
+
+  #   if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+  #     addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
+  #       | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
+  #     if [ -n "$addr" ]; then
+  #       ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })" >/dev/null && focused=1
+  #     fi
+  #   elif [ -n "''${NIRI_SOCKET:-}" ]; then
+  #     id=$(niri msg --json windows \
+  #       | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
+  #     if [ -n "$id" ]; then
+  #       niri msg action focus-window --id "$id" && focused=1
+  #     fi
+  #   fi
+
+  #   if [ "$focused" = 1 ]; then
+  #     exec ${emacs}/bin/emacsclient -n "$dir"
+  #   else
+  #     exec ${emacs}/bin/emacsclient -c -n -a "" "$dir"
+  #   fi
+  # '';
+
+  wm-focus = pkgs.writeShellScriptBin "wm-focus" ''
+    # usage: wm-focus <app_id> <command...>  — focus the window if it exists, else run the command
+    app="$1"; shift
+    jq=${pkgs.jq}/bin/jq
+
+    if [ -n "''${NIRI_SOCKET:-}" ]; then
+      id=$(niri msg --json windows \
+        | $jq -r --arg a "$app" '[.[] | select(.app_id == $a)][0].id // empty')
+      [ -n "$id" ] && exec niri msg action focus-window --id "$id"
+    elif [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+      addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
+        | $jq -r --arg a "$app" '[.[] | select((.class | ascii_downcase) == ($a | ascii_downcase))][0].address // empty')
+      [ -n "$addr" ] && exec ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })"
     fi
+    exec "$@"
+  '';
+
+  emacs-gui-wayland = pkgs.writeShellScriptBin "emacs-gui-wayland" ''
+    exec ${wm-focus}/bin/wm-focus emacs ${emacs}/bin/emacsclient -c -n -a ""
   '';
 
   emacs-dired-wayland = pkgs.writeShellScriptBin "emacs-dired-wayland" ''
-    dir="''${1:-$PWD}"
-    focused=0
-
-    if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
-      addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
-        | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
-      if [ -n "$addr" ]; then
-        ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })" >/dev/null && focused=1
-      fi
-    elif [ -n "''${NIRI_SOCKET:-}" ]; then
-      id=$(niri msg --json windows \
-        | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "emacs")][0].id // empty')
-      if [ -n "$id" ]; then
-        niri msg action focus-window --id "$id" && focused=1
-      fi
-    fi
-
-    if [ "$focused" = 1 ]; then
-      exec ${emacs}/bin/emacsclient -n "$dir"
-    else
-      exec ${emacs}/bin/emacsclient -c -n -a "" "$dir"
-    fi
+    ${emacs-gui-wayland}/bin/emacs-gui-wayland
+    exec ${emacs}/bin/emacsclient -n "''${1:-$PWD}"
   '';
 
-  emacs-gui-hyprland = pkgs.writeShellScriptBin "emacs-gui-hyprland" ''
-    addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
-      | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
+  # emacs-gui-hyprland = pkgs.writeShellScriptBin "emacs-gui-hyprland" ''
+  #   addr=$(${pkgs.hyprland}/bin/hyprctl clients -j \
+  #     | ${pkgs.jq}/bin/jq -r '[.[] | select(.class | ascii_downcase == "emacs")][0].address // empty')
 
-    if [ -n "$addr" ]; then
-      exec ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })"
-    else
-      exec ${emacs}/bin/emacsclient -c -n -a ""
-    fi
-  '';
+  #   if [ -n "$addr" ]; then
+  #     exec ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })"
+  #   else
+  #     exec ${emacs}/bin/emacsclient -c -n -a ""
+  #   fi
+  # '
+  # ';
 
   # ===== i3 Emacs =====
   # ===== X11 Emacs (i3 and qtile) =====
@@ -142,8 +169,8 @@ in
   home.packages = with pkgs; [
     # ===== Emacs =====
     nkt
-    emacs-gui
-    emacs-gui-hyprland
+    emacs-gui-wayland
+    # emacs-gui-hyprland
     emacs-gui-x11
     emacs-dired
     emacs-dired-wayland
@@ -152,18 +179,22 @@ in
       exec ${kitty}/bin/kitty --hold ${emacs}/bin/emacsclient -nw -a ""
     '')
 
-    # ===== Wayland =====
+    # ===== Wayland Terminal =====
     # NOTE: Used in wayland session
-    (writeShellScriptBin "doom-foot-terminal" ''
-      if ! ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a "" 2>/dev/null; then
-        ${foot}/bin/foot --server &
-        sleep 0.3
-        exec ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a ""
-      fi
+    # (writeShellScriptBin "doom-foot-terminal" ''
+    #   if ! ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a "" 2>/dev/null; then
+    #     ${foot}/bin/foot --server &
+    #     sleep 0.3
+    #     exec ${foot}/bin/footclient -- ${emacs}/bin/emacsclient -nw -a ""
+    #   fi
+    # '')
+
+    (writeShellScriptBin "dev-workspace-wayland" ''
+      exec ${wm-focus}/bin/wm-focus dev-workspace-wayland \
+        ${kitty}/bin/kitty --class dev-workspace-wayland --session ${kittySession}
     '')
 
-    # ===== Terminal =====
-    # kitty
+    # ===== X11 Terminal =====
     (writeShellScriptBin "dev-workspace" ''
       exec ${kitty}/bin/kitty --session ${kittySession}
     '')
