@@ -1,15 +1,14 @@
 { ... }:
-{
-  programs.waybar.settings.mainBar = {
+
+let
+  shared = {
     "custom/launcher" = {
       format = " ";
       tooltip = false;
     };
 
-    "hyprland/workspaces" = {
-      disable-scroll = true;
-      all-outputs = true;
-      tooltip = false;
+    "niri/workspaces" = {
+      all-outputs = false; # each bar shows only its own monitor's workspaces
     };
 
     tray = {
@@ -24,14 +23,11 @@
 
     temperature = {
       thermal-zone = 2;
-      # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
       critical-threshold = 80;
       format = "temp {temperatureC}°C";
       format-critical = "temp {temperatureC}°C";
       interval = 2;
-      states = {
-        critical = 80;
-      };
+      states.critical = 80;
     };
 
     "custom/gpu-temp" = {
@@ -44,22 +40,18 @@
     cpu = {
       format = "cpu {usage}%";
       interval = 2;
-      states = {
-        critical = 90;
-      };
+      states.critical = 90;
     };
 
     memory = {
       format = "mem {percentage}%";
       interval = 2;
-      states = {
-        critical = 80;
-      };
+      states.critical = 80;
     };
 
     network = {
       format-wifi = "wifi {bandwidthDownBits}";
-      format-ethernet = "enth {bandwidthDownBits}";
+      format-ethernet = "eth {bandwidthDownBits}";
       format-disconnected = "no network";
       interval = 5;
       tooltip = false;
@@ -71,15 +63,21 @@
       format = "vol {volume}%";
       format-bluetooth = "vol {volume}%";
       format-muted = "muted";
-      nospacing = 1;
       on-click = "pwvucontrol";
       tooltip = false;
     };
 
     "custom/control" = {
       format = "⏻";
-      on-click = "hyprctl dispatch exit";
+      on-click = "niri-powermenu";
       tooltip = false;
     };
+  };
+in
+
+{
+  programs.waybar.settings = {
+    mainBar = shared;
+    hdmiBar = shared;
   };
 }
