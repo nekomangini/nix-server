@@ -89,6 +89,15 @@
       border-color: @red;
     }
 
+    /* Remove empty Workspace(waybar 0.15.0) */
+    #workspaces button#niri-workspace-4.empty {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    opacity: 0;
+    }
+
     /* Clock */
     #clock {
       background: @bg1;
