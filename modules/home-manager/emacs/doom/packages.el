@@ -81,3 +81,5 @@
 ;; app launcher
 (package! xdg-launcher
   :recipe (:host github :repo "emacs-exwm/xdg-launcher"))
+
+(package! kdl-mode)
