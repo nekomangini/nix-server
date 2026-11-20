@@ -515,12 +515,20 @@
 ;;              (shell-command-to-string
 ;;               "dirname $(readlink -f $(which flutter))")))))
 
+;; (after! lsp-dart
+;;   (setq lsp-dart-sdk-dir (getenv "DART_SDK")
+;;         lsp-dart-flutter-sdk-dir (getenv "FLUTTER_ROOT")))
+
+;; (after! flutter
+;;   (setq flutter-sdk-path (file-name-as-directory (getenv "FLUTTER_ROOT"))))
+
 (after! lsp-dart
-  (setq lsp-dart-sdk-dir (getenv "DART_SDK")
-        lsp-dart-flutter-sdk-dir (getenv "FLUTTER_ROOT")))
+  (when-let ((dart (getenv "DART_SDK")))        (setq lsp-dart-sdk-dir dart))
+  (when-let ((flutter (getenv "FLUTTER_ROOT"))) (setq lsp-dart-flutter-sdk-dir flutter)))
 
 (after! flutter
-  (setq flutter-sdk-path (file-name-as-directory (getenv "FLUTTER_ROOT"))))
+  (when-let ((root (getenv "FLUTTER_ROOT")))
+    (setq flutter-sdk-path (file-name-as-directory root))))
 
 ;;; ============================================================================
 ;; GO SETUP SETUP
@@ -629,6 +637,15 @@
 ;;                              company-dabbrev-code)
 ;;                             company-files)))))
 
+(add-to-list 'auto-mode-alist '("\\.kdl\\'" . kdl-mode))
+;; kdl-mode calls a function that only newer Emacs versions provide
+(unless (fboundp 'treesit-query-valid-p)
+  (defun treesit-query-valid-p (language query)
+    "Return non-nil if QUERY is valid in LANGUAGE (backport for Emacs 30)."
+    (ignore-errors
+      (treesit-query-compile language query t)
+      t)))
+
 ;;; ============================================================================
 ;; Enable system clipboard
 ;;; ============================================================================
@@ -721,7 +738,7 @@
       (delete-frame))))
 
 (map! :leader
-      :desc "Launch application" "d" #'xdg-launcher-run-app)
+      :desc "Launch application" "o a" #'xdg-launcher-run-app)
 
 ;; Make Emacs ask in its own minibuffer
 (setq epg-pinentry-mode 'loopback)
@@ -772,6 +789,62 @@
               "wtype" nil
               (thanos/wtype-text (buffer-string)))
              (delete-frame)))))
+
+(defun my/tmux--panes ()
+  "List of (ID SESSION WINDOW TITLE COMMAND) for every tmux pane."
+  (with-temp-buffer
+    (when (zerop (call-process
+                  "tmux" nil t nil "list-panes" "-a" "-F"
+                  "#{pane_id}\t#{session_name}\t#{window_name}\t#{pane_title}\t#{pane_current_command}"))
+      (mapcar (lambda (line) (split-string line "\t"))
+              (split-string (buffer-string) "\n" t)))))
+
+(defvar-local my/tmux-pane-id nil
+  "The tmux pane shown in this buffer.")
+
+(defun my/tmux--fill ()
+  "Replace the buffer contents with the pane's full scrollback."
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (call-process "tmux" nil t nil "capture-pane" "-p" "-J" "-S" "-"
+                  "-t" my/tmux-pane-id)
+    (goto-char (point-max))))
+
+(defun my/tmux-show (id label)
+  "Show pane ID in a read-only buffer named after LABEL.  Press g to refresh."
+  (let ((buf (get-buffer-create (format "*tmux %s*" label))))
+    (with-current-buffer buf
+      (special-mode)
+      (setq my/tmux-pane-id id)
+      (setq-local revert-buffer-function (lambda (&rest _) (my/tmux--fill)))
+      (my/tmux--fill))
+    (pop-to-buffer buf)))
+
+(defun my/tmux-capture-pane ()
+  "Pick any tmux pane and show its scrollback."
+  (interactive)
+  (let* ((panes (my/tmux--panes))
+         (alist (mapcar (lambda (p)
+                          (cons (format "%s:%s [%s] %s" (nth 1 p) (nth 2 p) (nth 3 p) (nth 4 p))
+                                (car p)))
+                        panes))
+         (choice (completing-read "tmux pane: " alist nil t)))
+    (my/tmux-show (cdr (assoc choice alist)) choice)))
+
+(defun my/tmux-capture-named (session name)
+  "Show the pane in SESSION whose window name or pane title is NAME."
+  (interactive "sSession: \nsWindow or pane name: ")
+  (let ((hit (cl-find-if (lambda (p)
+                           (and (string= (nth 1 p) session)
+                                (or (string= (nth 2 p) name) (string= (nth 3 p) name))))
+                         (my/tmux--panes))))
+    (if hit
+        (my/tmux-show (car hit) (format "%s:%s" session name))
+      (user-error "No pane named %s in session %s" name session))))
+
+(map! :leader
+      :desc "tmux: pick pane"        "o x" #'my/tmux-capture-pane
+      :desc "tmux: dotfiles console" "o X" (cmd! (my/tmux-capture-named "dotfiles" "console")))
 
 ;; Here are some additional functions/macros that will help you configure Doom.
 ;;
