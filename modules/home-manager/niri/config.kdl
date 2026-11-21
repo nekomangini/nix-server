@@ -313,8 +313,8 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
-spawn-at-startup "awww-daemon"
+// spawn-at-startup "waybar"
+// spawn-at-startup "awww-daemon"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -323,7 +323,7 @@ spawn-at-startup "awww-daemon"
 // spawn-sh-at-startup "sleep 1 && swww img --outputs DP-1 /home/nekomangini/nix-server/wallpaper/cars_034.png && swww img --outputs DVI-D-1 /home/nekomangini/nix-server/wallpaper/space_009.jpg && swww img --outputs HDMI-A-1 /home/nekomangini/nix-server/wallpaper/cars_036.jpg"
 
 // dual monitor
-spawn-sh-at-startup "sleep 1 && awww img --outputs HDMI-A-1 /home/nekomangini/nix-server/wallpaper/environment_art_036_h.jpg && awww img --outputs DVI-D-1 /home/nekomangini/nix-server/wallpaper/environment_art_038.jpg"
+// spawn-sh-at-startup "sleep 1 && awww img --outputs HDMI-A-1 /home/nekomangini/nix-server/wallpaper/environment_art_036_h.jpg && awww img --outputs DVI-D-1 /home/nekomangini/nix-server/wallpaper/environment_art_038.jpg"
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     // skip-at-startup
@@ -353,6 +353,22 @@ animations {
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
+}
+
+// ─────────────────────────────────────────────────────────────
+// Noctalia
+spawn-at-startup "noctalia"
+
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+
+debug {
+    // allows notification actions and window activation from Noctalia
+    honor-xdg-activation-with-invalid-serial
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -539,10 +555,8 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="kitty: Launch dev-workspace" { spawn "dev-workspace-wayland"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel"  { spawn "fuzzel"; }
     // NOTE: Removed, keybind use for mouse emulation, use Super+X(niri-powermenu script) instead
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
-    Mod+Shift+X hotkey-overlay-title="hyprlock: Lock the Screen" { spawn "hyprlock"; }
 
     // NOTE: Screen reader
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -560,21 +574,26 @@ binds {
     // Mod+Y { spawn "emacsclient" "-e" "(emacs-run-launcher)";}
     // TODO:
     Mod+B       { spawn "wayland-websearch"; }
-    Mod+X hotkey-overlay-title="script: Spawn niri powwermenu" { spawn "niri-powermenu"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    // XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    // XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    // XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    // XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    // Commented out; Noctalia
+    // Mod+D hotkey-overlay-title="Run an Application: fuzzel"  { spawn "fuzzel"; }
+    // Mod+Shift+X hotkey-overlay-title="hyprlock: Lock the Screen" { spawn "hyprlock"; }
+    // Mod+X hotkey-overlay-title="script: Spawn niri powwermenu" { spawn "niri-powermenu"; }
+
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+    // XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    // XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // Play/Pause
     XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
@@ -836,9 +855,29 @@ binds {
     // The delay lets modifier keys release first.
     Mod+Alt+Comma  hotkey-overlay-title="ydotool: left click"  { spawn-sh "sleep 0.7 && ydotool click 0xC0"; }
     Mod+Alt+Period hotkey-overlay-title="ydotool: right click" { spawn-sh "ydotool click 0xC1"; }
+
+
+    // Noctalia
+    Mod+D             { spawn-sh "noctalia msg panel-toggle launcher"; }        // was fuzzel
+    Mod+S             { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+X             { spawn-sh "noctalia msg panel-toggle session"; }         // power menu, was niri-powermenu
+    Mod+Shift+W       { spawn-sh "noctalia msg panel-toggle wallpaper"; }
+    Mod+Shift+X       { spawn-sh "noctalia msg session lock"; }                 // was hyprlock
+    Mod+Shift+C       { spawn-sh "noctalia msg panel-toggle clipboard"; }
+    Mod+Shift+Comma   { spawn-sh "noctalia msg settings-toggle"; }          // Mod+Comma is already your consume-window bind
+    Alt+Tab           { spawn-sh "noctalia msg window-switcher hold"; }
+    Alt+Shift+Tab     { spawn-sh "noctalia msg window-switcher hold reverse"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
 }
 
 environment {
     QT_QPA_PLATFORM "wayland"
     NIXOS_OZONE_WL "1"
 }
+
+
+
+include "noctalia.kdl"
