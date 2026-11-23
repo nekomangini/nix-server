@@ -17,4 +17,6 @@
   ];
 
   services.redis.servers.immich.logLevel = "warning";
+
+  nixpkgs.config.permittedInsecurePackages = [ "immich-2.7.5" ];
 }
