@@ -11,6 +11,11 @@
         mode = "dark";
         source = "builtin";
         builtin = "Catppuccin";
+
+        templates = {
+          enable_community_templates = true;
+          community_ids = [ "vivaldi" ];
+        };
       };
 
       widget.workspaces = {

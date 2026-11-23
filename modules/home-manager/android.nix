@@ -4,7 +4,9 @@
   home.packages = with pkgs; [
     android-studio
     android-tools
+    android-cli
     gradle
+    xwayland-satellite
     # jdk17
 
     flutter

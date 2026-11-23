@@ -26,17 +26,17 @@
 
     ../../modules/home-manager/qtile
     ../../modules/home-manager/i3
-    ../../modules/home-manager/dunst
     ../../modules/home-manager/hyprland
     ../../modules/home-manager/niri
 
+    ../../modules/home-manager/dunst
     # ../../modules/home-manager/hyprpaper.nix
     ../../modules/home-manager/autorandr
     ../../modules/home-manager/noctalia
     ../../modules/home-manager/kanshi
-    ../../modules/home-manager/waybar
-    ../../modules/home-manager/fuzzel.nix
-    ../../modules/home-manager/hyprlock.nix
+    # ../../modules/home-manager/waybar
+    # ../../modules/home-manager/fuzzel.nix
+    # ../../modules/home-manager/hyprlock.nix
     ../../modules/home-manager/ydotool.nix
   ];
 
