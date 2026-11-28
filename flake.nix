@@ -10,6 +10,11 @@
     # noctalia
     noctalia.url = "github:noctalia-dev/noctalia";
 
+    # mangowm
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
