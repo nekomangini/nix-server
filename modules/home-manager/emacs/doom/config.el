@@ -790,6 +790,18 @@
               (thanos/wtype-text (buffer-string)))
              (delete-frame)))))
 
+(defvar my/search-engines
+  '(("Flutter"       . "https://www.google.com/search?q=site:flutter.dev+%s")
+    ("Vue.js"        . "https://www.google.com/search?q=site:vuejs.org+%s")
+    ("Ecosia"        . "https://www.ecosia.org/search?q=%s")
+    ("Arch Manual"   . "https://man.archlinux.org/search?q=%s"))
+  "Search engines: name and URL with %s for the encoded query.")
+
+;; Use them in Doom's lookup module (SPC s o / +lookup/online-select)
+(dolist (e my/search-engines)
+  (unless (assoc (car e) +lookup-provider-url-alist)
+    (add-to-list '+lookup-provider-url-alist (list (car e) (cdr e)) t)))
+
 (defun my/tmux--panes ()
   "List of (ID SESSION WINDOW TITLE COMMAND) for every tmux pane."
   (with-temp-buffer

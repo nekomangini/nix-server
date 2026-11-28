@@ -36,6 +36,7 @@
     ../../modules/nixos/window-managers/qtile.nix
     ../../modules/nixos/window-managers/niri.nix
     ../../modules/nixos/window-managers/i3.nix
+    inputs.mangowm.nixosModules.mango
 
     # === Services ===
     ../../modules/nixos/services/kdeconnect.nix
@@ -60,6 +61,29 @@
     # === Maintenance ===
     ../../modules/nixos/maintenance/autoupdate.nix
   ];
+
+  # Enable mangowm
+  programs.mango = {
+    enable = true;
+    package =
+      let
+        mango = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      in
+      pkgs.symlinkJoin {
+        name = "mango-wrapped";
+        paths = [ mango ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/mango --set WLR_DRM_DEVICES /dev/dri/card1
+        '';
+        passthru = mango.passthru or { };
+      };
+  };
+  # programs.mango.enable = true;
+  # environment.sessionVariables = {
+  #   WLR_RENDERER_ALLOW_SOFTWARE = "1";
+  #   WLR_DRM_DEVICES = "/dev/dri/card1";
+  # };
 
   # networking.hostName = "neko-desktop"; # Define your hostname.
   networking = {

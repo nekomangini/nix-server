@@ -28,6 +28,7 @@
     ../../modules/home-manager/i3
     ../../modules/home-manager/hyprland
     ../../modules/home-manager/niri
+    ../../modules/home-manager/mango
 
     ../../modules/home-manager/dunst
     # ../../modules/home-manager/hyprpaper.nix
